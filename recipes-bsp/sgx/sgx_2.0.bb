@@ -33,8 +33,19 @@ FILES_${PN}-dev = "/opt/intel/sgxsdk/*"
 INSANE_SKIP_${PN} = "dev-deps libdir"
 INSANE_SKIP_${PN}-dev = "staticdev"
 
+python () {
+	cc = d.getVar('CC').split()
+	ccopts = [i for i in cc[1:] if not i.startswith('-Wl,')]
+	ccopts = ['-cflag -ccopt -cflag %s' % i for i in ccopts]
+	ldopts = cc[1:]
+	ldopts = ['-lflag -ccopt -lflag %s' % i for i in ldopts]
+	d.setVar('CCONLY', cc[0])
+	d.setVar('CCOPTS', ' '.join(ccopts))
+	d.setVar('LDOPTS', ' '.join(ldopts))
+}
+
 # Non Debug build
-EXTRA_OEMAKE_class-target = "'MODE=HW' 'psw'"
+EXTRA_OEMAKE_class-target = "CCONLY='${CCONLY}' CCOPTS='${CCOPTS}' LDOPTS='${LDOPTS}' 'MODE=HW' 'psw'"
 # Debug build
 #EXTRA_OEMAKE_class-target = "'MODE=HW' 'psw' 'DEBUG=1'"
 CXXFLAGS_append = " -std=c++0x"
@@ -58,7 +69,7 @@ do_configure_class-target() {
         --enable-debug=no        \
         --enable-debug-frame=no  \
         --enable-cxx-exceptions
-    
+
     #configure gperftools
     GPERFTOOLS_DIR=${S}/sdk/gperftools/gperftools-2.5
     echo "*****************************"

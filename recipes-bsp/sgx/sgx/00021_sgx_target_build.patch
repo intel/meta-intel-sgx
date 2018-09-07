@@ -20,10 +20,10 @@ index 4706cac..1a0c9f6 100644
  # ocaml 4.02 - added support for PIC
  ifeq ($(shell test $(OCAML_VERSION) -lt 402 && echo 1), 1)
 -	ocamlbuild -lflag -ccopt -lflag "-Wl,-z,now" -no-links -libs str,unix  Edger8r.native
-+	ocamlbuild -lflag -ccopt -lflag "-Wl,-z,now" -no-links -libs str,unix -lflags -cc,$(ROOT_DIR)/../recipe-sysroot-native/usr/bin/x86_64-ese-linux/x86_64-ese-linux-gcc,-ccopt,--sysroot=$(ROOT_DIR)/../recipe-sysroot Edger8r.native 
++	ocamlbuild -lflag -ccopt -lflag "-Wl,-z,now" -no-links -libs str,unix -lflags -cc,$(CCONLY) $(CCOPTS) $(LDOPTS) Edger8r.native
  else
 -	ocamlbuild -cflags -ccopt,-fpie -lflags -runtime-variant,_pic,-ccopt,-pie,-ccopt -lflag "-Wl,-z,now"  -no-links -libs str,unix Edger8r.native
-+	ocamlbuild -cflags -ccopt,-fpie -lflags -runtime-variant,_pic,-ccopt,-pie,-ccopt -lflag "-Wl,-z,now"  -no-links -libs str,unix -lflags -cc,$(ROOT_DIR)/../recipe-sysroot-native/usr/bin/x86_64-ese-linux/x86_64-ese-linux-gcc,-ccopt,--sysroot=$(ROOT_DIR)/../recipe-sysroot Edger8r.native
++	ocamlbuild -cflags -ccopt,-fpie -lflags -runtime-variant,_pic,-ccopt,-pie,-ccopt -lflag "-Wl,-z,now"  -no-links -libs str,unix -lflags -cc,$(CCONLY) $(CCOPTS) $(LDOPTS) Edger8r.native
  endif
  
  $(BUILD_DIR):
