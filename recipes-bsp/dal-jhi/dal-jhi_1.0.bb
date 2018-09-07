@@ -52,17 +52,4 @@ DEPENDS += "systemd libxml2"
 #	EXTRA_OECMAKE_prepend = "${S} "
 #}
 
-do_compile () {
-	# You will almost certainly need to add additional arguments here
-	oe_runmake 
-}
-
-do_install_class-target() {
-	# This is a guess; additional arguments may be required
-	oe_runmake install DESTDIR=${D}
-	rm -rf ${D}/usr/src/debug
-}
-
-inherit systemd
 SYSTEMD_SERVICE_${PN} = "jhi.service"
-
