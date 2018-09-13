@@ -54,7 +54,7 @@ index 3092c52..accd031 100644
  $(TCMALLOC): libtcmalloc
  	$(CP) $(SRCDIR)/.libs/libtcmalloc_minimal.a $(TCMALLOC)
 diff --git a/sdk/gperftools/gperftools-2.5/configure b/sdk/gperftools/gperftools-2.5/configure
-index 9f4da86..bc09016 100755
+index 9f4da86..7666199 100755
 --- a/sdk/gperftools/gperftools-2.5/configure
 +++ b/sdk/gperftools/gperftools-2.5/configure
 @@ -17677,7 +17677,7 @@ case "$host" in
@@ -62,18 +62,10 @@ index 9f4da86..bc09016 100755
  
                 ;;
 -            *) if test "$cross_compiling" = yes; then
-+            *) if test "$cross_compiling" = yes && test "$host" != x86_64-ese-linux-gnu; then
++            *) if false; then
                   ac_cv_func_mmap_fixed_mapped=yes
  
  $as_echo "#define HAVE_MMAP 1" >>confdefs.h
-@@ -17685,7 +17685,6 @@ $as_echo "#define HAVE_MMAP 1" >>confdefs.h
-                else
- 
- 
--
-   for ac_header in $ac_header_list
- do :
-   as_ac_Header=`$as_echo "ac_cv_header_$ac_header" | $as_tr_sh`
 diff --git a/external/vtune/linux/sdk/src/ittnotify/Makefile b/external/vtune/linux/sdk/src/ittnotify/Makefile
 index 6e4f565..7e6f383 100644
 --- a/external/vtune/linux/sdk/src/ittnotify/Makefile
