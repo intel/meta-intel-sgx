@@ -1,8 +1,8 @@
 diff --git a/psw/ae/aesm_service/Makefile b/psw/ae/aesm_service/Makefile
-index d83f3e9..aa9440e 100644
+index 1128b45..2f883dd 100644
 --- a/psw/ae/aesm_service/Makefile
 +++ b/psw/ae/aesm_service/Makefile
-@@ -86,7 +86,7 @@
+@@ -86,7 +86,7 @@ INCLUDE += -I$(SGX_IPP_INC) \
             -I$(AESM_INC_DIR) \
             -I$(IPC_COMMON_PROTO_DIR)
  
@@ -10,7 +10,7 @@ index d83f3e9..aa9440e 100644
 +EDGER8R  := sgx_edger8r
  
  
- SQLITECFLAGS := -fpie -Wall -Wno-unused-const-variable -Werror
+ SQLITECFLAGS := -fpie -Wall -Werror -Wno-maybe-uninitialized $(call cc-disable-warning,unused-const-variable)
 diff --git a/sdk/edger8r/linux/Makefile b/sdk/edger8r/linux/Makefile
 index 4706cac..1a0c9f6 100644
 --- a/sdk/edger8r/linux/Makefile
