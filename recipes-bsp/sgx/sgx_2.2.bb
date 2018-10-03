@@ -4,8 +4,6 @@ DEPENDS_append_class-native = "ocaml-native"
 DEPENDS_append_class-nativesdk = "openssl ocaml-native"
 HOMEPAGE = "https://01.org/intel-softwareguard-extensions"
 
-#RDEPENDS_${PN}_class-target += " icls-client dal-jhi"
-
 # libpaths recipe provides the /lib64 symlink for pre-compiled binaries.
 RDEPENDS_${PN}_append_class-target = " libpaths"
 
@@ -211,12 +209,10 @@ do_install_class-target() {
 	install -m 0644 ${SGX_BUILD_DIR}/le_prod_css.bin ${D}/opt/intel/sgxpsw/aesm
 	install -m 0644 ${SGX_BUILD_DIR}/libsgx*.signed.so ${D}/opt/intel/sgxpsw/aesm
 	install -m 0755 ${WORKDIR}/linksgx.sh ${D}/opt/intel/sgxpsw/aesm
-    install -m 0644 ${SGX_BUILD_DIR}/PSDA.dalp ${D}/opt/intel/sgxpsw/aesm
 	
-	# Install PSE database and Remote Attesation-related data
+	# Install Remote Attestation-related data
 	install -d ${D}/var/opt/aesmd/data
     install -m 0644 ${B}/psw/ae/aesm_service/data/white_list_cert_to_be_verify.bin ${D}/var/opt/aesmd/data
-    install -m 0644 ${B}/psw/ae/aesm_service/data/prebuild_pse_vmc.db ${D}/var/opt/aesmd/data
 	
 	# Install aesmd network configuration
 	install -d ${D}/etc
@@ -262,7 +258,6 @@ do_install_class-target() {
     cp -r ${B}/SampleCode/SampleEnclave     ${SGX_SDK_DIR}/SampleCode/
     cp -r ${B}/SampleCode/PowerTransition   ${SGX_SDK_DIR}/SampleCode/
     cp -r ${B}/SampleCode/Cxx11SGXDemo      ${SGX_SDK_DIR}/SampleCode/
-    cp -r ${B}/SampleCode/SealedData        ${SGX_SDK_DIR}/SampleCode/
     cp -r ${B}/SampleCode/LocalAttestation  ${SGX_SDK_DIR}/SampleCode/
     cp -r ${B}/SampleCode/RemoteAttestation ${SGX_SDK_DIR}/SampleCode/
     install -d ${SGX_SDK_DIR}/SampleCode/RemoteAttestation/sample_libcrypto
