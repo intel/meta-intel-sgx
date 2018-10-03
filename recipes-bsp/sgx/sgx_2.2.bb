@@ -1,36 +1,54 @@
-SUMMARY = "tool for SGX"
+SUMMARY = "Intel(R) SGX PSW and SDK"
 DEPENDS_append_class-target = "openssl isgx curl protobuf protobuf-native sgx-native"
 DEPENDS_append_class-native = "ocaml-native"
 DEPENDS_append_class-nativesdk = "openssl ocaml-native"
 HOMEPAGE = "https://01.org/intel-softwareguard-extensions"
 
-RDEPENDS_${PN}_class-target += " icls-client dal-jhi"
+#RDEPENDS_${PN}_class-target += " icls-client dal-jhi"
+
+# libpaths recipe provides the /lib64 symlink for pre-compiled binaries.
+RDEPENDS_${PN}_append_class-target = " libpaths"
+
+# For example, linksgx.sh needs bash shell.
+RDEPENDS_${PN} += "bash"
+
+inherit systemd
 
 LICENSE = "BSD"
 
 LIC_FILES_CHKSUM = "file://License.txt;md5=c7a6a2fa753b1403cdbc7f1d14e11f65"
 
-SRC_URI = "git://github.com/intel/linux-sgx.git "
+SRC_URI = "git://github.com/intel/linux-sgx.git"
 
-SRC_URI_append_class-native = "file://0001-sgx-native-removed-werror.patch"
+SRC_URI_append_class-native = " file://0001-sgx-native-removed-werror.patch"
 
 SRC_URI_append_class-target = " file://0001-Yocto-patch-for-SGX-2.0.patch \
 	file://0001-Sample-Code-patch.patch \
 	file://aesmd.service \
-        file://00021_sgx_target_build.patch \
-           "
+	file://linksgx.sh \
+	file://uninstall.sh \
+    file://00021_sgx_target_build.patch \
+	file://pcl_Makefile.patch \
+    "
 
-#SRCREV = "${AUTOREV}"
-SRCREV = "1bcdf2ed21b7bc70d9f1f03362e3d6582be62448"
-
-#PV = "2.1+git${SRCPV}"
+SRCREV = "a169a69497b9dc2e9714cdc213ff8f538bf3aaa2"
 
 S = "${WORKDIR}/git"
 
+# NOTE: PACKAGES Order -> Specific -> General
 PACKAGES = "${PN} ${PN}-dev ${PN}-dbg ${PN}-staticdev"
-FILES_${PN} = "${sbindir}/* ${sysconfdir}/* ${localstatedir}/opt/*  ${libdir}/* "
-FILES_${PN}-dev = "/opt/intel/sgxsdk/*"
-INSANE_SKIP_${PN} = "dev-deps libdir"
+FILES_${PN}-dev = "/opt/intel/sgxsdk"
+FILES_${PN} = "/opt/intel/sgxpsw /var/opt /etc /lib /usr/lib"
+
+# Both PSW & SDK contain development and production worthy .so files
+# with the same names. Make sure target has only production ones in
+# /usr/lib/ and the development ones inside the sgxsdk.
+PRIVATE_LIBS = "libsgx_urts.so"
+PRIVATE_LIBS += "libsgx_uae_service.so"
+PRIVATE_LIBS += "libsgx_urts_sim.so"
+PRIVATE_LIBS += "libsgx_uae_service_sim.so"
+
+INSANE_SKIP_${PN} = "libdir"
 INSANE_SKIP_${PN}-dev = "staticdev"
 
 python () {
@@ -47,14 +65,24 @@ python () {
 # Non Debug build
 EXTRA_OEMAKE_class-target = "CCONLY='${CCONLY}' CCOPTS='${CCOPTS}' LDOPTS='${LDOPTS}' 'MODE=HW' 'psw'"
 # Debug build
-#EXTRA_OEMAKE_class-target = "'MODE=HW' 'psw' 'DEBUG=1'"
+#EXTRA_OEMAKE_class-target_append = "'DEBUG=1'"
 CXXFLAGS_append = " -std=c++0x"
 
 PARALLEL_MAKE = ""
 
+S = "${WORKDIR}/git"
+
+BBCLASSEXTEND =+ "native nativesdk"
+
+# Avoid generated binaries stripping.
+INHIBIT_PACKAGE_STRIP = "1"
+INHIBIT_PACKAGE_DEBUG_SPLIT="1"
+
+SYSTEMD_SERVICE_${PN} = "aesmd.service"
+
 TARGET_CC_ARCH += "${LDFLAGS}"
 do_configure_class-target() {
-    # configure libunwind
+    # Configure libunwind
     UNWIND_DIR=${S}/sdk/cpprt/linux/libunwind
     echo "****************************"
     echo "Configure libunwind. Path:"
@@ -70,13 +98,12 @@ do_configure_class-target() {
         --enable-debug-frame=no  \
         --enable-cxx-exceptions
 
-    #configure gperftools
+    # Configure gperftools
     GPERFTOOLS_DIR=${S}/sdk/gperftools/gperftools-2.5
     echo "*****************************"
     echo "Configure gperftools. Path:"
     echo ${GPERFTOOLS_DIR}
     echo "*****************************"
-#    (cd ${GPERFTOOLS_DIR} && autoreconf -v --install --force) || exit $?
     COMMON_FLAGS="-g -DNO_HEAP_CHECK -DTCMALLOC_SGX -DTCMALLOC_NO_ALIASES -fstack-protector"
     ENCLAVE_CFLAGS="${COMMON_FLAGS} -ffreestanding -nostdinc -fvisibility=hidden -fPIC"
     ENCLAVE_CXXFLAGS="${ENCLAVE_CFLAGS} -nostdinc++"
@@ -96,7 +123,7 @@ do_configure_class-target() {
         --disable-debugalloc \
         --enable-minimal
 
-    # configure rdrand
+    # Configure rdrand
     RDRAND_DIR=${S}/external/rdrand/src
     echo "****************************"
     echo "Configure rdrand. Path:"
@@ -165,9 +192,44 @@ EOF
 }
 
 do_install_class-target() {
-    SGX_BUILD_DIR=${B}/build/linux
+    SGX_BUILD_DIR=${B}/build/linux/
+	
+	###################
+	# Install SGX PSW #
+	###################
+	# Install urts/uae_service to /usr/lib
+    install -d ${D}/usr/lib
+    install -m 0755 ${SGX_BUILD_DIR}/libsgx_urts.so ${D}/usr/lib/libsgx_urts.so
+    install -m 0755 ${SGX_BUILD_DIR}/libsgx_uae_service.so ${D}/usr/lib/libsgx_uae_service.so
+    install -m 0755 ${SGX_BUILD_DIR}/libsgx_urts_sim.so ${D}/usr/lib/libsgx_urts_sim.so
+    install -m 0755 ${SGX_BUILD_DIR}/libsgx_uae_service_sim.so ${D}/usr/lib/libsgx_uae_service_sim.so
+	
+	# Install AEs and other SGX_PSW_DIR files & directories.
+	install -d ${D}/opt/intel/sgxpsw/aesm
+	install -m 0755 ${WORKDIR}/uninstall.sh ${D}/opt/intel/sgxpsw
+    install -m 0755 ${SGX_BUILD_DIR}/aesm_service ${D}/opt/intel/sgxpsw/aesm
+	install -m 0644 ${SGX_BUILD_DIR}/le_prod_css.bin ${D}/opt/intel/sgxpsw/aesm
+	install -m 0644 ${SGX_BUILD_DIR}/libsgx*.signed.so ${D}/opt/intel/sgxpsw/aesm
+	install -m 0755 ${WORKDIR}/linksgx.sh ${D}/opt/intel/sgxpsw/aesm
+    install -m 0644 ${SGX_BUILD_DIR}/PSDA.dalp ${D}/opt/intel/sgxpsw/aesm
+	
+	# Install PSE database and Remote Attesation-related data
+	install -d ${D}/var/opt/aesmd/data
+    install -m 0644 ${B}/psw/ae/aesm_service/data/white_list_cert_to_be_verify.bin ${D}/var/opt/aesmd/data
+    install -m 0644 ${B}/psw/ae/aesm_service/data/prebuild_pse_vmc.db ${D}/var/opt/aesmd/data
+	
+	# Install aesmd network configuration
+	install -d ${D}/etc
+    install -m 0644 ${B}/psw/ae/aesm_service/config/network/aesmd.conf ${D}/etc
+    
+	# Install aesmd.service systemd unit file
+	install -d ${D}/lib/systemd/system
+	#install -d ${D}${systemd_system_unitdir}
+    install -m 0644 ${WORKDIR}/aesmd.service ${D}/lib/systemd/system
    
-# Install SDK
+	###################
+	# Install SGX SDK #
+	###################
     SGX_SDK_DIR=${D}/opt/intel/sgxsdk
 
     install -d ${SGX_SDK_DIR}/bin
@@ -245,62 +307,4 @@ EOF
 export SGX_SDK=/opt/intel/sgxsdk/
 export PATH=\$PATH:\$SGX_SDK/bin
 EOF
-
-# Install urts/uae_service to /usr/lib
-    install -d ${D}${libdir}
-    install -m 0755 ${SGX_BUILD_DIR}/libsgx_urts.so ${D}${libdir}/libsgx_urts.so
-#    ln -s libsgx_urts.so.2.0 ${D}${libdir}/libsgx_urts.so
-    install -m 0755 ${SGX_BUILD_DIR}/libsgx_uae_service.so ${D}${libdir}/libsgx_uae_service.so
-#    ln -s libsgx_uae_service.so.2.0 ${D}${libdir}/libsgx_uae_service.so
-    install -m 0755 ${SGX_BUILD_DIR}/libsgx_urts_sim.so ${D}${libdir}/libsgx_urts_sim.so
-#    ln -s libsgx_urts_sim.so.2.0 ${D}${libdir}/libsgx_urts_sim.so
-    install -m 0755 ${SGX_BUILD_DIR}/libsgx_uae_service_sim.so ${D}${libdir}/libsgx_uae_service_sim.so
-#    ln -s libsgx_uae_service_sim.so.2.0  ${D}${libdir}/libsgx_uae_service_sim.so
-
-# Install AEs
-    install -d ${D}${sbindir}/sgx
-    install -m 0755 ${SGX_BUILD_DIR}/aesm_service ${D}${sbindir}/sgx
-    install -m 0755 ${SGX_BUILD_DIR}/libsgx*.signed.so ${D}${sbindir}/sgx
-    install -m 0644 ${SGX_BUILD_DIR}/le_prod_css.bin ${D}${sbindir}/sgx
-    install -m 0644 ${SGX_BUILD_DIR}/PSDA.dalp ${D}${sbindir}/sgx
-    install -m 0755 ${SGX_BUILD_DIR}/cse_provision_tool  ${D}${sbindir}/sgx
-    install -d ${D}${localstatedir}/opt/aesmd/data 
-    install -m 0644 ${B}/psw/ae/aesm_service/data/white_list_cert_to_be_verify.bin	 ${D}${localstatedir}/opt/aesmd/data
-    install -m 0644 ${B}/psw/ae/aesm_service/data/prebuild_pse_vmc.db  ${D}${localstatedir}/opt/aesmd/data
-    install -d ${D}${sysconfdir}
-    install -m 0644 ${B}/psw/ae/aesm_service/config/network/aesmd.conf ${D}${sysconfdir}/
-#    install -d ${D}/${sysconfdir}/init.d
-#    install -m 0755 ${WORKDIR}/aesmd  ${D}/${sysconfdir}/init.d/aesmd
-    install -d ${D}/${base_libdir}/systemd/system
-    install -m 0644 ${WORKDIR}/aesmd.service  ${D}/${base_libdir}/systemd/system/
-
 }
-
-#sgx_sysroot_preprocess() {
-#    SGX_SDK_DIR=${SYSROOT_DESTDIR}/opt/intel/sgxsdk
-#    install -d ${SGX_SDK_DIR}/sdk_libs
-
-#	ln -sf ${SGX_SDK_DIR}/lib64/libsgx_urts_sim.so 				${SGX_SDK_DIR}/sdk_libs/libsgx_urts_sim.so
-#	ln -sf ${SGX_SDK_DIR}/lib64/libsgx_uae_service_sim.so 		${SGX_SDK_DIR}/sdk_libs/libsgx_uae_service_sim.so
-#}
-
-#SYSROOT_PREPROCESS_FUNCS_class-target += "sgx_sysroot_preprocess"
-#SYSROOT_PREPROCESS_FUNCS += "sgx_sysroot_preprocess"
-
-
-BBCLASSEXTEND =+ "native nativesdk"
-
-
-# Avoid generated binaries stripping.
-INHIBIT_PACKAGE_STRIP = "1"
-INHIBIT_PACKAGE_DEBUG_SPLIT="1"
-
-
-RDEPENDS_${PN} += "bash"
-
-#inherit update-rc.d
-#INITSCRIPT_NAME = "aesmd"
-#INITSCRIPT_PARAMS = "defaults"
-inherit systemd
-SYSTEMD_SERVICE_${PN} = "aesmd.service"
-
