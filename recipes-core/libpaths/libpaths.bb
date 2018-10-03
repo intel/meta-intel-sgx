@@ -14,7 +14,7 @@ do_install_append () {
 }
 
 pkg_postinst_${PN} () {
-    if [ -d /lib ] && ! [ -d /lib64 ]; then
-		ln -s /lib /lib64
-	fi
+    if [ -d $D/lib ] && ! [ -d $D/lib64 ]; then
+        ln -s lib $D/lib64
+    fi
 }
