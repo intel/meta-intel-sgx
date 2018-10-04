@@ -33,8 +33,6 @@ SRCREV = "a169a69497b9dc2e9714cdc213ff8f538bf3aaa2"
 
 S = "${WORKDIR}/git"
 
-# NOTE: PACKAGES Order -> Specific -> General
-PACKAGES = "${PN} ${PN}-dev ${PN}-dbg ${PN}-staticdev"
 FILES_${PN}-dev = "/opt/intel/sgxsdk"
 FILES_${PN} = "/opt/intel/sgxpsw /var/opt /etc /lib /usr/lib"
 
@@ -49,6 +47,7 @@ PRIVATE_LIBS += "libsgx_uae_service_sim.so"
 INSANE_SKIP_${PN} = "libdir"
 INSANE_SKIP_${PN}-dev = "staticdev"
 
+# To pass correct flags to ocamlbuild commandline for cc and linker.
 python () {
 	cc = d.getVar('CC').split()
 	ccopts = [i for i in cc[1:] if not i.startswith('-Wl,')]
