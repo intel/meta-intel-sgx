@@ -12,7 +12,7 @@ RDEPENDS_${PN} += "bash"
 
 inherit systemd
 
-LICENSE = "BSD"
+LICENSE = "BSD & EPL-1.0 & Intel-Redistributable-Binaries & MIT"
 
 LIC_FILES_CHKSUM = "file://License.txt;md5=c7a6a2fa753b1403cdbc7f1d14e11f65"
 
@@ -302,3 +302,5 @@ export SGX_SDK=/opt/intel/sgxsdk/
 export PATH=\$PATH:\$SGX_SDK/bin
 EOF
 }
+
+RRECOMMENDS_${PN} += "kernel-module-isgx"
