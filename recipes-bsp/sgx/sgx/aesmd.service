@@ -1,0 +1,22 @@
+[Unit]
+Description=Intel(R) Architectural Enclave Service Manager 
+After=syslog.target network.target auditd.service
+Wants=jhi.service
+
+[Service]
+Type=forking
+Environment=NAME=aesm_service
+Environment=AESM_PATH=/usr/sbin/sgx/
+PermissionsStartOnly=true
+ExecStartPre=/bin/mkdir -p /var/run/aesmd/
+ExecStartPre=/bin/chmod 0755 /var/run/aesmd/
+ExecStart=/usr/sbin/sgx/aesm_service
+InaccessibleDirectories=/home
+ExecReload=/bin/kill -SIGUP $MAINPID
+Restart=on-failure
+RestartSec=15s
+DevicePolicy=closed
+DeviceAllow=/dev/isgx rw
+DeviceAllow=/dev/mei0 rw
+[Install]
+WantedBy=multi-user.target

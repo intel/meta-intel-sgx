@@ -1,0 +1,43 @@
+From 6040c92f004cab15ab043ad354c47c88050be5ca Mon Sep 17 00:00:00 2001
+From: "Lian, Da (Landau)" <da.lian@intel.com>
+Date: Thu, 30 Nov 2017 23:02:21 +0800
+Subject: [PATCH] sgx native removed werror
+
+Signed-off-by: Lian, Da (Landau) <da.lian@intel.com>
+---
+ psw/urts/parser/Makefile        | 4 ----
+ sdk/sign_tool/SignTool/Makefile | 3 ---
+ 2 files changed, 7 deletions(-)
+
+diff --git a/psw/urts/parser/Makefile b/psw/urts/parser/Makefile
+index 6bd41ea..1a54a44 100644
+--- a/psw/urts/parser/Makefile
++++ b/psw/urts/parser/Makefile
+@@ -39,10 +39,6 @@ TARGET := libenclaveparser.a
+ 
+ CXXFLAGS += -fPIC -USE_DEBUG_LEVEL -DSE_DEBUG_LEVEL=SE_TRACE_WARNING
+ 
+-ifneq ($(HOST_OS), darwin)
+-  CXXFLAGS += -Werror
+-endif
+-
+ CXXFLAGS += -I$(COMMON_DIR)/inc/         \
+             -I$(COMMON_DIR)/inc/internal \
+             -I.                          \
+diff --git a/sdk/sign_tool/SignTool/Makefile b/sdk/sign_tool/SignTool/Makefile
+index 7ac7aaa..7360271 100644
+--- a/sdk/sign_tool/SignTool/Makefile
++++ b/sdk/sign_tool/SignTool/Makefile
+@@ -31,9 +31,6 @@
+ 
+ include ../../../buildenv.mk
+ 
+-CXXFLAGS += -Werror
+-CFLAGS   += -Werror
+-
+ CFLAGS += -fpie
+ CXXFLAGS += -fpie
+ LDFLAGS := -pie $(COMMON_LDFLAGS)
+-- 
+2.7.4
+
