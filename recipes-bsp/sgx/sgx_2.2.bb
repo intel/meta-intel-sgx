@@ -12,7 +12,10 @@ RDEPENDS_${PN} += "bash"
 
 inherit systemd
 
-LICENSE = "BSD & EPL-1.0 & Intel-Redistributable-Binaries & MIT"
+LICENSE = "BSD-3-Clause & EPL-1.0 & Intel-Redistributable-Binaries \
+           & BSD-2-Clause & (NCSA | MIT) & CC0-1.0 & OpenSSL \
+		   & Intel-Sample-Source-Code & PD & STLPort & Zlib & MIT \
+		   & (BSD-3-Clause | GPL-2.0) & Apache-2.0"
 
 LIC_FILES_CHKSUM = "file://License.txt;md5=c7a6a2fa753b1403cdbc7f1d14e11f65"
 
