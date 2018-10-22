@@ -10,8 +10,12 @@ This layer depends on:
 1) meta-oe for protobuf recipe
 URI: git://git.openembedded.org/meta-openembedded -b sumo
 
-Intel(R) SGX needs to be supported by both the silicon as well as the
-boot firmware, namely, UEFI BIOS.
+2) systemd initialization manager
+URI: https://www.yoctoproject.org/docs/current/mega-manual/mega-manual.html#selecting-an-initialization-manager
+
+Besides dependencies for SGX support on Yocto, Intel(R) SGX technology
+needs to be supported by both the silicon as well as the boot firmware, 
+namely, UEFI BIOS.
 
 Patches
 =======
@@ -46,6 +50,7 @@ other layers needed. e.g.:
     /path/to/yocto/meta \
     /path/to/yocto/meta-yocto \
     /path/to/yocto/meta-yocto-bsp \
+    /path/to/yocto/meta-openembedded/meta-oe \
     /path/to/yocto/meta-intel-sgx \
     "
 
