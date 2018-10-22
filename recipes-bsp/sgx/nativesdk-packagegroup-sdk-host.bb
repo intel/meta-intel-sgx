@@ -7,5 +7,5 @@ inherit packagegroup nativesdk
 PACKAGEGROUP_DISABLE_COMPLEMENTARY = "1"
 
 RDEPENDS_${PN} = "\
-	nativesdk-sgx \
-	"
+    nativesdk-sgx \
+    "
