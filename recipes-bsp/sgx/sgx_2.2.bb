@@ -4,12 +4,6 @@ DEPENDS_append_class-native = "ocaml-native"
 DEPENDS_append_class-nativesdk = "openssl ocaml-native"
 HOMEPAGE = "https://01.org/intel-softwareguard-extensions"
 
-# libpaths recipe provides the /lib64 symlink for pre-compiled binaries.
-RDEPENDS_${PN}_append_class-target = " libpaths"
-
-# For example, linksgx.sh needs bash shell.
-RDEPENDS_${PN} += "bash"
-
 inherit systemd
 
 LICENSE = "BSD-3-Clause & EPL-1.0 & Intel-Redistributable-Binaries \
@@ -30,25 +24,11 @@ SRC_URI_append_class-target = " file://0001-Yocto-patch-for-SGX-2.0.patch \
     file://uninstall.sh \
     file://00021_sgx_target_build.patch \
     file://pcl_Makefile.patch \
-    "
+"
 
 SRCREV = "a169a69497b9dc2e9714cdc213ff8f538bf3aaa2"
 
 S = "${WORKDIR}/git"
-
-FILES_${PN}-dev = "/opt/intel/sgxsdk"
-FILES_${PN} = "/opt/intel/sgxpsw /var/opt /etc /lib /usr/lib"
-
-# Both PSW & SDK contain development and production worthy .so files
-# with the same names. Make sure target has only production ones in
-# /usr/lib/ and the development ones inside the sgxsdk.
-PRIVATE_LIBS = "libsgx_urts.so"
-PRIVATE_LIBS += "libsgx_uae_service.so"
-PRIVATE_LIBS += "libsgx_urts_sim.so"
-PRIVATE_LIBS += "libsgx_uae_service_sim.so"
-
-INSANE_SKIP_${PN} = "libdir"
-INSANE_SKIP_${PN}-dev = "staticdev"
 
 # To pass correct flags to ocamlbuild commandline for cc and linker.
 python () {
@@ -71,14 +51,6 @@ CXXFLAGS_append = " -std=c++0x"
 PARALLEL_MAKE = ""
 
 S = "${WORKDIR}/git"
-
-BBCLASSEXTEND =+ "native nativesdk"
-
-# Avoid generated binaries stripping.
-INHIBIT_PACKAGE_STRIP = "1"
-INHIBIT_PACKAGE_DEBUG_SPLIT="1"
-
-SYSTEMD_SERVICE_${PN} = "aesmd.service"
 
 TARGET_CC_ARCH += "${LDFLAGS}"
 do_configure_class-target() {
@@ -306,4 +278,32 @@ export PATH=\$PATH:\$SGX_SDK/bin
 EOF
 }
 
+SYSTEMD_SERVICE_${PN} = "aesmd.service"
+
+# libpaths recipe provides the /lib64 symlink for pre-compiled binaries.
+RDEPENDS_${PN}_append_class-target = " libpaths"
+
+# For example, linksgx.sh needs bash shell.
+RDEPENDS_${PN} += "bash"
+
 RRECOMMENDS_${PN} += "kernel-module-isgx"
+
+# Avoid generated binaries stripping.
+INHIBIT_PACKAGE_STRIP = "1"
+INHIBIT_PACKAGE_DEBUG_SPLIT = "1"
+
+FILES_${PN}-dev = "/opt/intel/sgxsdk"
+FILES_${PN} = "/opt/intel/sgxpsw /var/opt /etc /lib /usr/lib"
+
+# Both PSW & SDK contain development and production worthy .so files
+# with the same names. Make sure target has only production ones in
+# /usr/lib/ and the development ones inside the sgxsdk.
+PRIVATE_LIBS = "libsgx_urts.so"
+PRIVATE_LIBS += "libsgx_uae_service.so"
+PRIVATE_LIBS += "libsgx_urts_sim.so"
+PRIVATE_LIBS += "libsgx_uae_service_sim.so"
+
+INSANE_SKIP_${PN} = "libdir"
+INSANE_SKIP_${PN}-dev = "staticdev"
+
+BBCLASSEXTEND =+ "native nativesdk"
