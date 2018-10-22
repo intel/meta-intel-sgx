@@ -162,7 +162,7 @@ do_install_class-nativesdk() {
     install -d ${D}${bindir}
     install -m 0755 ${SGX_BUILD_DIR}/sgx_sign ${D}${bindir}
     install -m 0755 ${SGX_BUILD_DIR}/sgx_edger8r ${D}${bindir}
-    
+
     cat > ${D}${bindir}/sgx-gdb << EOF
 #!/usr/bin/env bash
 #
@@ -193,7 +193,7 @@ EOF
 
 do_install_class-target() {
     SGX_BUILD_DIR=${B}/build/linux/
-	
+
 	###################
 	# Install SGX PSW #
 	###################
@@ -203,7 +203,7 @@ do_install_class-target() {
     install -m 0755 ${SGX_BUILD_DIR}/libsgx_uae_service.so ${D}/usr/lib/libsgx_uae_service.so
     install -m 0755 ${SGX_BUILD_DIR}/libsgx_urts_sim.so ${D}/usr/lib/libsgx_urts_sim.so
     install -m 0755 ${SGX_BUILD_DIR}/libsgx_uae_service_sim.so ${D}/usr/lib/libsgx_uae_service_sim.so
-	
+
 	# Install AEs and other SGX_PSW_DIR files & directories.
 	install -d ${D}/opt/intel/sgxpsw/aesm
 	install -m 0755 ${WORKDIR}/uninstall.sh ${D}/opt/intel/sgxpsw
@@ -211,20 +211,20 @@ do_install_class-target() {
 	install -m 0644 ${SGX_BUILD_DIR}/le_prod_css.bin ${D}/opt/intel/sgxpsw/aesm
 	install -m 0644 ${SGX_BUILD_DIR}/libsgx*.signed.so ${D}/opt/intel/sgxpsw/aesm
 	install -m 0755 ${WORKDIR}/linksgx.sh ${D}/opt/intel/sgxpsw/aesm
-	
+
 	# Install Remote Attestation-related data
 	install -d ${D}/var/opt/aesmd/data
     install -m 0644 ${B}/psw/ae/aesm_service/data/white_list_cert_to_be_verify.bin ${D}/var/opt/aesmd/data
-	
+
 	# Install aesmd network configuration
 	install -d ${D}/etc
     install -m 0644 ${B}/psw/ae/aesm_service/config/network/aesmd.conf ${D}/etc
-    
+
 	# Install aesmd.service systemd unit file
 	install -d ${D}/lib/systemd/system
 	#install -d ${D}${systemd_system_unitdir}
     install -m 0644 ${WORKDIR}/aesmd.service ${D}/lib/systemd/system
-   
+
 	###################
 	# Install SGX SDK #
 	###################
@@ -242,11 +242,11 @@ do_install_class-target() {
     install -m 0755 ${SGX_BUILD_DIR}/sgx_sign                       ${SGX_SDK_DIR}/bin/
     install -m 0755 ${SGX_BUILD_DIR}/sgx_edger8r                    ${SGX_SDK_DIR}/bin/
     install -m 0755 ${SGX_BUILD_DIR}/libsgx_ptrace.so               ${SGX_SDK_DIR}/lib64/libsgx_ptrace.so.2.0
-    ln -s libsgx_ptrace.so.2.0 ${SGX_SDK_DIR}/lib64/libsgx_ptrace.so 
+    ln -s libsgx_ptrace.so.2.0 ${SGX_SDK_DIR}/lib64/libsgx_ptrace.so
     install -m 0755 ${SGX_BUILD_DIR}/libsgx_uae_service_deploy.so   ${SGX_SDK_DIR}/lib64/libsgx_uae_service.so.2.0
-    ln -s libsgx_uae_service.so.2.0 ${SGX_SDK_DIR}/lib64/libsgx_uae_service.so 
+    ln -s libsgx_uae_service.so.2.0 ${SGX_SDK_DIR}/lib64/libsgx_uae_service.so
     install -m 0755 ${SGX_BUILD_DIR}/libsgx_urts_deploy.so          ${SGX_SDK_DIR}/lib64/libsgx_urts.so.2.0
-    ln -s libsgx_urts.so.2.0 ${SGX_SDK_DIR}/lib64/libsgx_urts.so 
+    ln -s libsgx_urts.so.2.0 ${SGX_SDK_DIR}/lib64/libsgx_urts.so
     install -m 0755 ${SGX_BUILD_DIR}/libsgx*.a                      ${SGX_SDK_DIR}/lib64/
     install -m 0755 ${SGX_BUILD_DIR}/gdb-sgx-plugin/*.py            ${SGX_SDK_DIR}/lib64/gdb-sgx-plugin/
     install -m 0644 ${SGX_BUILD_DIR}/gdb-sgx-plugin/gdb_sgx_cmd     ${SGX_SDK_DIR}/lib64/gdb-sgx-plugin/
