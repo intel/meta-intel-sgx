@@ -1,4 +1,4 @@
-From 623e1d1e476f393d8fee96116fe7ba592a85aaa0 Mon Sep 17 00:00:00 2001
+From d1dfa96ea99b748e8e2476797119eabc2775cd0b Mon Sep 17 00:00:00 2001
 From: "Lian, Da (Landau)" <da.lian@intel.com>
 Date: Thu, 28 Dec 2017 11:35:48 +0800
 Subject: [PATCH] isgx kernel modules
@@ -6,16 +6,17 @@ Subject: [PATCH] isgx kernel modules
 Upstream-Status: Pending
 
 Signed-off-by: Lian, Da (Landau) <da.lian@intel.com>
+
 ---
  Makefile | 9 ++++-----
  1 file changed, 4 insertions(+), 5 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index 11f2927..86fcb23 100644
+index b0a11e2..869b84c 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -7,15 +7,14 @@ ifneq ($(KERNELRELEASE),)
- 		sgx_util.o
+@@ -8,15 +8,14 @@ ifneq ($(KERNELRELEASE),)
+ 		sgx_encl.o
  	obj-m += isgx.o
  else
 -KDIR := /lib/modules/$(shell uname -r)/build
@@ -34,6 +35,3 @@ index 11f2927..86fcb23 100644
  
  endif
  
--- 
-2.7.4
-
