@@ -199,9 +199,8 @@ do_install_class-target() {
     install -m 0644 ${B}/psw/ae/aesm_service/config/network/aesmd.conf ${D}/etc
 
     # Install aesmd.service systemd unit file
-    install -d ${D}/lib/systemd/system
-    #install -d ${D}${systemd_system_unitdir}
-    install -m 0644 ${WORKDIR}/aesmd.service ${D}/lib/systemd/system
+    install -d ${D}${systemd_system_unitdir}
+    install -m 0644 ${WORKDIR}/aesmd.service ${D}${systemd_system_unitdir}
 
     ###################
     # Install SGX SDK #
