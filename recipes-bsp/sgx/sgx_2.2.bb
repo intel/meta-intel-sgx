@@ -303,10 +303,11 @@ FILES_${PN} = "/opt/intel/sgxpsw /var/opt /etc /lib /usr/lib"
 # Both PSW & SDK contain development and production worthy .so files
 # with the same names. Make sure target has only production ones in
 # /usr/lib/ and the development ones inside the sgxsdk.
-PRIVATE_LIBS = "libsgx_urts.so"
-PRIVATE_LIBS += "libsgx_uae_service.so"
-PRIVATE_LIBS += "libsgx_urts_sim.so"
-PRIVATE_LIBS += "libsgx_uae_service_sim.so"
+PRIVATE_LIBS = "libsgx_urts.so \
+                libsgx_uae_service.so \
+                libsgx_urts_sim.so \
+                libsgx_uae_service_sim.so \
+"
 
 INSANE_SKIP_${PN} = "libdir"
 INSANE_SKIP_${PN}-dev = "staticdev"
