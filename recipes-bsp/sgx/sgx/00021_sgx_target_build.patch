@@ -1,3 +1,7 @@
+Cross-compilation fixes
+
+Upstream-Status: Pending
+
 diff --git a/psw/ae/aesm_service/Makefile b/psw/ae/aesm_service/Makefile
 index 1128b45..2f883dd 100644
 --- a/psw/ae/aesm_service/Makefile

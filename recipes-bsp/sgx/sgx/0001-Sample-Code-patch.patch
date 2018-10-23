@@ -2,6 +2,10 @@ From 1800f39910005c53099b4399c6d5d7d85317434f Mon Sep 17 00:00:00 2001
 Date: Thu, 13 Jul 2017 18:54:18 +0800
 Subject: [PATCH] Sample Code patch.
 
+Build fixes for sample code.
+
+Upstream-Status: Pending
+
 ---
  SampleCode/Cxx11SGXDemo/Makefile      | 12 +++++-------
  SampleCode/LocalAttestation/Makefile  | 22 ++++++++++------------

@@ -3,6 +3,8 @@ From: "Lian, Da (Landau)" <da.lian@intel.com>
 Date: Thu, 28 Dec 2017 11:35:48 +0800
 Subject: [PATCH] isgx kernel modules
 
+Upstream-Status: Pending
+
 Signed-off-by: Lian, Da (Landau) <da.lian@intel.com>
 ---
  Makefile | 9 ++++-----

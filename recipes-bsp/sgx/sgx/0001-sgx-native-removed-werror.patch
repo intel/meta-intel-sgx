@@ -3,6 +3,8 @@ From: "Lian, Da (Landau)" <da.lian@intel.com>
 Date: Thu, 30 Nov 2017 23:02:21 +0800
 Subject: [PATCH] sgx native removed werror
 
+Upstream-Status: Inappropriate [embedded-specific]
+
 Signed-off-by: Lian, Da (Landau) <da.lian@intel.com>
 ---
  psw/urts/parser/Makefile        | 4 ----
