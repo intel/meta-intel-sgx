@@ -13,7 +13,15 @@ LICENSE = "BSD-3-Clause & EPL-1.0 & Intel-Redistributable-Binaries \
 
 LIC_FILES_CHKSUM = "file://License.txt;md5=c7a6a2fa753b1403cdbc7f1d14e11f65"
 
-SRC_URI = "git://github.com/intel/linux-sgx.git"
+# NOTE: Replace download_prebuilt.sh with .tar.gz entries in SRC_URI below.
+# If the download_prebuilt.sh script changes in future releases, then these
+# entries will need to be updated. This aloows us to take advantage of
+# bitbake's standard fetching/mirroring functionality and avoids additional
+# workarounds for proxy setting.
+SRC_URI = "git://github.com/intel/linux-sgx.git \
+    https://download.01.org/intel-sgx/linux-2.3/optimized_libs_2.3.tar.gz;subdir=${S};name=optimized_libs \
+    https://download.01.org/intel-sgx/linux-2.3/prebuilt_ae_2.3.tar.gz;subdir=${S};name=prebuilt_ae \
+"
 
 SRC_URI_append_class-native = " file://0001-sgx-native-removed-werror.patch"
 
@@ -25,6 +33,11 @@ SRC_URI_append_class-target = " file://0001-Yocto-patch-for-SGX-2.0.patch \
     file://00021_sgx_target_build.patch \
     file://pcl_Makefile.patch \
 "
+
+SRC_URI[optimized_libs.md5sum] = "e5805206d5f75f510e60e3fbfe8e3a8f"
+SRC_URI[optimized_libs.sha256sum] = "1bf79f188e1b1ee0249af115475ff617eba9e2389604d70c619da7fa93c64b19"
+SRC_URI[prebuilt_ae.md5sum] = "29c93ac1d00363e3c6341b7a548c15f6"
+SRC_URI[prebuilt_ae.sha256sum] = "d171136f28f10f76f8ecf1ff91f8d9772b053c035efc9bb29b9ff56af442548a"
 
 SRCREV = "a169a69497b9dc2e9714cdc213ff8f538bf3aaa2"
 
@@ -103,13 +116,6 @@ do_configure_class-target() {
     echo "****************************"
     CFLAGS="${CFLAGS} -fPIC"
     cd ${RDRAND_DIR} && ./configure --host=${TARGET_SYS} --build=${BUILD_SYS}
-}
-
-do_compile_prepend() {
-    if [ -n "${https_proxy}" ]; then
-        export https_proxy=${https_proxy}
-    fi
-    ${B}/download_prebuilt.sh
 }
 
 do_compile_class-native() {
