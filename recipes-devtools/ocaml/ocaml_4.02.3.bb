@@ -1,4 +1,4 @@
-DESCRIPTION = "Objective Caml Compiler"
+SUMMARY = "Objective Caml Compiler"
 
 SECTION = "devel"
 
@@ -15,7 +15,6 @@ SUB_PV = "${@get_sub_version(d)}"
 SRC_URI = "http://caml.inria.fr/pub/distrib/ocaml-${SUB_PV}/ocaml-${PV}.tar.gz"
 
 SRC_URI[md5sum] = "ef1a324608c97031cbd92a442d685ab7"
-
 SRC_URI[sha256sum] = "928fb5f64f4e141980ba567ff57b62d8dc7b951b58be9590ffb1be2172887a72"
 
 S = "${WORKDIR}/ocaml-${PV}"
