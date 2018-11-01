@@ -71,5 +71,6 @@ including SGX SDK:
 Copying
 =======
 
-Unless noted otherwise, files are provided under the MIT license (see COPYING.MIT).
+Unless noted otherwise, files are provided under the MIT license (see COPYING.MIT)
+and are Copyright © Intel Corporation 2018.
 
