@@ -66,3 +66,10 @@ Add the following to local.conf in order to enable Intel(R) SGX,
 including SGX SDK:
   # Enable Intel(R) SGX with SDK support.
   IMAGE_INSTALL_append = " sgx-dev"
+
+
+Copying
+=======
+
+Unless noted otherwise, files are provided under the MIT license (see COPYING.MIT).
+
