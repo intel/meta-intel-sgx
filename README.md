@@ -37,8 +37,8 @@ Adding the meta-intel-sgx layer to your Yocto build
   2) local.conf
 
 
-1. bblayers.conf
-================
+bblayers.conf
+=============
 
 Add the location of the meta-intel-sgx layer to bblayers.conf, in
 order to make the build system aware of it, along with any other layers
@@ -53,8 +53,8 @@ needed, for example:
     "
 
 
-2. local.conf
-=============
+local.conf
+==========
 
 Add the following to local.conf in order to enable Intel(R) SGX without
 the SGX SDK:
