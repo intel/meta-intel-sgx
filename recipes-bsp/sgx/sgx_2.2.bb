@@ -1,5 +1,5 @@
 SUMMARY = "Intel(R) SGX PSW and SDK"
-DEPENDS_append_class-target = "openssl isgx curl protobuf protobuf-native sgx-native"
+DEPENDS_append_class-target = "openssl curl protobuf protobuf-native sgx-native"
 DEPENDS_append_class-native = "ocaml-native openssl-native"
 DEPENDS_append_class-nativesdk = "openssl ocaml-native"
 HOMEPAGE = "https://01.org/intel-softwareguard-extensions"
