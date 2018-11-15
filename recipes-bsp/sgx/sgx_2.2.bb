@@ -58,7 +58,8 @@ python () {
 # Non Debug build
 EXTRA_OEMAKE_class-target = "CCONLY='${CCONLY}' CCOPTS='${CCOPTS}' LDOPTS='${LDOPTS}' 'MODE=HW' 'psw'"
 # Debug build
-#EXTRA_OEMAKE_class-target_append = "'DEBUG=1'"
+#EXTRA_OEMAKE_class-target_append = " 'DEBUG=1'"
+
 CXXFLAGS_append = " -std=c++0x"
 
 PARALLEL_MAKE = ""
