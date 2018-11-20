@@ -27,6 +27,8 @@ do_compile () {
     oe_runmake world.opt
 }
 
+PARALLEL_MAKEINST = ""
+
 do_install_class-native () {
     oe_runmake install DESTDIR=${D}
     oe_runmake install
