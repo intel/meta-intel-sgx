@@ -13,7 +13,7 @@ URI: https://www.yoctoproject.org/docs/current/mega-manual/mega-manual.html#sele
 
 Besides dependencies for SGX support on Yocto, Intel(R) SGX technology
 needs to be supported by both the silicon as well as the boot firmware,
-namely, UEFI BIOS.
+namely, UEFI BIOS, Slimboot bootloader, etc.
 
 
 Patches
@@ -66,6 +66,32 @@ Add the following to local.conf in order to enable Intel(R) SGX,
 including SGX SDK:
   # Enable Intel(R) SGX with SDK support.
   IMAGE_INSTALL_append = " sgx-dev"
+
+
+Changes to local.conf and sgx.cfg
+=================================
+
+Depending on whether the processor and the boot firmware supports SGX
+Launch Control Configuration (LCC) (or in other words, Flex Launch
+Control (FLC)), you can pick one of the three SGX LCC modes in the
+boot firmware, namely, Unlocked Mode, Intel Locked Mode, OEM/3rd Party
+Locked Mode.
+
+In order to use any of the Locked Modes, wherein, IA32_SGXLEPUBKEYHASH
+MSRs are programmed before booting to OS, then SGX out-of-tree ('isgx')
+driver must be used. There are two steps to do that:
+Step 1/2) Add "isgx" to IMAGE_INSTALL in local.conf:
+IMAGE_INSTALL_append = " isgx"
+Step 2/2) Set SGX kernel configs in recipes-kernel/linux/files/sgx.cfg to
+"n":
+CONFIG_INTEL_SGX_CORE=n
+CONFIG_INTEL_SGX=n
+
+On the other hand, if you choose to pick UnLocked Mode, then SGX
+in-kernel driver must be used. To use the SGX in-kernel driver,
+leave the sgx.cfg as is (set to "y") and add the following line to
+local.conf:
+DISTRO_FEATURES_append = " sgx"
 
 
 Copying
