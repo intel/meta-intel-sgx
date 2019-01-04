@@ -1,6 +1,6 @@
 SUMMARY = "Intel(R) SGX PSW and SDK"
 DEPENDS_append_class-target = "openssl isgx curl protobuf protobuf-native sgx-native"
-DEPENDS_append_class-native = "ocaml-native"
+DEPENDS_append_class-native = "ocaml-native openssl-native"
 DEPENDS_append_class-nativesdk = "openssl ocaml-native"
 HOMEPAGE = "https://01.org/intel-softwareguard-extensions"
 
@@ -60,7 +60,7 @@ EXTRA_OEMAKE_class-target = "CCONLY='${CCONLY}' CCOPTS='${CCOPTS}' LDOPTS='${LDO
 # Debug build
 #EXTRA_OEMAKE_class-target_append = " 'DEBUG=1'"
 
-CXXFLAGS_append = " -std=c++0x"
+CXXFLAGS_append = " -std=c++0x ${LDFLAGS}"
 
 PARALLEL_MAKE = ""
 
