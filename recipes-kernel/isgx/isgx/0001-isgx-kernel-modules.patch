@@ -1,0 +1,37 @@
+From d1dfa96ea99b748e8e2476797119eabc2775cd0b Mon Sep 17 00:00:00 2001
+From: "Lian, Da (Landau)" <da.lian@intel.com>
+Date: Thu, 28 Dec 2017 11:35:48 +0800
+Subject: [PATCH] isgx kernel modules
+
+Upstream-Status: Pending
+
+Signed-off-by: Lian, Da (Landau) <da.lian@intel.com>
+
+---
+ Makefile | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index b0a11e2..869b84c 100644
+--- a/Makefile
++++ b/Makefile
+@@ -8,15 +8,14 @@ ifneq ($(KERNELRELEASE),)
+ 		sgx_encl.o
+ 	obj-m += isgx.o
+ else
+-KDIR := /lib/modules/$(shell uname -r)/build
++KDIR := $(KERNEL_SRC)
+ PWD  := $(shell pwd)
+ 
+-default:
++all:
+ 	$(MAKE) -C $(KDIR) SUBDIRS=$(PWD) modules
+ 
+-install: default
+-	$(MAKE) INSTALL_MOD_DIR=kernel/drivers/intel/sgx -C $(KDIR) M=$(PWD) modules_install
+-	sh -c "cat /etc/modules | grep -Fxq isgx || echo isgx >> /etc/modules"
++modules_install:
++	$(MAKE) -C $(KDIR) M=$(PWD) modules_install
+ 
+ endif
+ 
