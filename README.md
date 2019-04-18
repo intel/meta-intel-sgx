@@ -74,12 +74,12 @@ Locked Mode.
 
 If you choose to pick any of the Locked Modes, then SGX
 out-of-tree ('isgx') driver must be used. To use the SGX out-of-tree
-driver, add the following line to local.conf:
+driver, add the following line to local.conf:  
 IMAGE_INSTALL_append = " isgx"
 
 On the other hand, if you choose to pick UnLocked Mode, then SGX
 in-kernel driver must be used. To use the SGX in-kernel driver,
-add the following line to local.conf:
+add the following line to local.conf:  
 DISTRO_FEATURES_append = " sgx"
 
 
@@ -94,18 +94,19 @@ Locked Mode.
 
 In order to use any of the Locked Modes, wherein, IA32_SGXLEPUBKEYHASH
 MSRs are programmed before booting to OS, then SGX out-of-tree ('isgx')
-driver must be used. There are two steps to do that:
-Step 1/2) Add "isgx" to IMAGE_INSTALL in local.conf:
+driver must be used. Following are the two steps to do that:  
+Step 1/2) Add "isgx" to IMAGE_INSTALL in local.conf:  
 IMAGE_INSTALL_append = " isgx"
+
 Step 2/2) Set SGX kernel configs in recipes-kernel/linux/files/sgx.cfg to
-"n":
-CONFIG_INTEL_SGX_CORE=n
+"n":  
+CONFIG_INTEL_SGX_CORE=n  
 CONFIG_INTEL_SGX=n
 
 On the other hand, if you choose to pick UnLocked Mode, then SGX
 in-kernel driver must be used. To use the SGX in-kernel driver,
 leave the sgx.cfg as is (set to "y") and add the following line to
-local.conf:
+local.conf:  
 DISTRO_FEATURES_append = " sgx"
 
 
