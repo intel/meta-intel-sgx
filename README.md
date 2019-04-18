@@ -67,6 +67,22 @@ including SGX SDK:
   # Enable Intel(R) SGX with SDK support.
   IMAGE_INSTALL_append = " sgx-dev"
 
+Depending on whether the processor and the boot firmware supports SGX
+Launch Control Configuration (LCC) (or in other words, Flex Launch
+Control (FLC)), you can pick one of the three SGX LCC modes in the
+boot firmware, namely, Unlocked Mode, Intel Locked Mode, OEM/3rd Party
+Locked Mode.
+
+If you choose to pick any of the Locked Modes, then SGX
+out-of-tree ('isgx') driver must be used. To use the SGX out-of-tree
+driver, add the following line to local.conf:
+IMAGE_INSTALL_append = " isgx"
+
+On the other hand, if you choose to pick UnLocked Mode, then SGX
+in-kernel driver must be used. To use the SGX in-kernel driver,
+add the following line to local.conf:
+DISTRO_FEATURES_append = " sgx"
+
 
 Changes to local.conf and sgx.cfg
 =================================
