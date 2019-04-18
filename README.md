@@ -57,15 +57,14 @@ local.conf
 ==========
 
 Add the following to local.conf in order to enable Intel(R) SGX without
-the SGX SDK:
-
-  # Enable Intel(R) SGX support.
-  IMAGE_INSTALL_append = " sgx"
+the SGX SDK:  
+&#35; Enable Intel(R) SGX support.  
+IMAGE_INSTALL_append = " sgx"
 
 Add the following to local.conf in order to enable Intel(R) SGX,
-including SGX SDK:
-  # Enable Intel(R) SGX with SDK support.
-  IMAGE_INSTALL_append = " sgx-dev"
+including SGX SDK:  
+&#35; Enable Intel(R) SGX with SDK support.  
+IMAGE_INSTALL_append = " sgx-dev"
 
 Depending on whether the processor and the boot firmware supports SGX
 Launch Control Configuration (LCC) (or in other words, Flex Launch
