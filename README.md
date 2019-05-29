@@ -1,9 +1,9 @@
+# Intel(R) SGX Yocto Layer
+
 This README file contains information on the contents of the
 meta-intel-sgx layer to support Intel(R) SGX on Yocto.
 
-
-Dependencies
-============
+## Dependencies
 
 1) meta-oe for protobuf recipe
 URI: git://git.openembedded.org/meta-openembedded -b sumo
@@ -15,9 +15,7 @@ Besides dependencies for SGX support on Yocto, Intel(R) SGX technology
 needs to be supported by both the silicon as well as the boot firmware,
 namely, UEFI BIOS, Slimboot bootloader, etc.
 
-
-Patches
-=======
+## Patches
 
 Please submit any patches via Github pull requests.
 
@@ -29,21 +27,18 @@ Furthermore, in that email, make sure to copy the maintainer and add
 
 Maintainer: Naveen R. Iyer <naveen.iyer@intel.com>
 
-
-Adding the meta-intel-sgx layer to your Yocto build
-===================================================
+## Adding the meta-intel-sgx layer to your Yocto build
 
   1) bblayers.conf
   2) local.conf
 
-
-bblayers.conf
-=============
+### bblayers.conf
 
 Add the location of the meta-intel-sgx layer to bblayers.conf, in
 order to make the build system aware of it, along with any other layers
 needed, for example:
 
+```
   BBLAYERS ?= " \
     /path/to/yocto/meta \
     /path/to/yocto/meta-yocto \
@@ -51,20 +46,33 @@ needed, for example:
     /path/to/yocto/meta-openembedded/meta-oe \
     /path/to/yocto/meta-intel-sgx \
     "
+```
 
+### local.conf
 
-local.conf
-==========
+Intel(R) SGX software stack for Linux includes the driver, PSW (Platform SW)
+and SDK. Running Intel(R) SGX applications on target needs the driver and
+PSW. Additionally, developing Intel(R) SGX applications on target will
+need the SDK.
 
-Add the following to local.conf in order to enable Intel(R) SGX without
-the SGX SDK:  
-&#35; Enable Intel(R) SGX support.  
+#### Step 1/2) Enable PSW and SDK (SDK is optional)
+
+Add the following to local.conf in order to enable Intel(R) SGX PSW:
+
+```
+# Enable Intel(R) SGX PSW support.
 IMAGE_INSTALL_append = " sgx"
+```
 
-Add the following to local.conf in order to enable Intel(R) SGX,
-including SGX SDK:  
-&#35; Enable Intel(R) SGX with SDK support.  
+Add the following to local.conf in order to enable Intel(R) SGX PSW and
+SGX SDK:  
+
+```
+# Enable Intel(R) SGX PSW & SDK support.  
 IMAGE_INSTALL_append = " sgx-dev"
+```
+
+#### Step 2/2) Enable the driver
 
 Depending on whether the processor and the boot firmware supports SGX
 Launch Control Configuration (LCC) (or in other words, Flex Launch
@@ -75,43 +83,20 @@ Locked Mode.
 If you choose to pick any of the Locked Modes, then SGX
 out-of-tree ('isgx') driver must be used. To use the SGX out-of-tree
 driver, add the following line to local.conf:  
+
+```
 IMAGE_INSTALL_append = " isgx"
+```
 
-On the other hand, if you choose to pick UnLocked Mode, then SGX
-in-kernel driver must be used. To use the SGX in-kernel driver,
-add the following line to local.conf:  
+On the other hand, if you choose to pick the Unlocked Mode, then SGX
+in-kernel driver must be used. To use the in-kernel SGX driver, add the
+following to local.conf:
+
+```
 DISTRO_FEATURES_append = " sgx"
+```
 
-
-Changes to local.conf and sgx.cfg
-=================================
-
-Depending on whether the processor and the boot firmware supports SGX
-Launch Control Configuration (LCC) (or in other words, Flex Launch
-Control (FLC)), you can pick one of the three SGX LCC modes in the
-boot firmware, namely, Unlocked Mode, Intel Locked Mode, OEM/3rd Party
-Locked Mode.
-
-In order to use any of the Locked Modes, wherein, IA32_SGXLEPUBKEYHASH
-MSRs are programmed before booting to OS, then SGX out-of-tree ('isgx')
-driver must be used. Following are the two steps to do that:  
-Step 1/2) Add "isgx" to IMAGE_INSTALL in local.conf:  
-IMAGE_INSTALL_append = " isgx"
-
-Step 2/2) Set SGX kernel configs in recipes-kernel/linux/files/sgx.cfg to
-"n":  
-CONFIG_INTEL_SGX_CORE=n  
-CONFIG_INTEL_SGX=n
-
-On the other hand, if you choose to pick UnLocked Mode, then SGX
-in-kernel driver must be used. To use the SGX in-kernel driver,
-leave the sgx.cfg as is (set to "y") and add the following line to
-local.conf:  
-DISTRO_FEATURES_append = " sgx"
-
-
-Copying
-=======
+## Copying
 
 Unless noted otherwise, files are provided under the MIT license (see COPYING.MIT)
 and are Copyright © Intel Corporation 2018.
