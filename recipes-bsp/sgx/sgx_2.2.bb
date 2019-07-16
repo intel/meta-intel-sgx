@@ -180,11 +180,11 @@ do_install_class-target() {
     # Install SGX PSW #
     ###################
     # Install urts/uae_service to /usr/lib
-    install -d ${D}/usr/lib
-    install -m 0755 ${SGX_BUILD_DIR}/libsgx_urts.so ${D}/usr/lib/libsgx_urts.so
-    install -m 0755 ${SGX_BUILD_DIR}/libsgx_uae_service.so ${D}/usr/lib/libsgx_uae_service.so
-    install -m 0755 ${SGX_BUILD_DIR}/libsgx_urts_sim.so ${D}/usr/lib/libsgx_urts_sim.so
-    install -m 0755 ${SGX_BUILD_DIR}/libsgx_uae_service_sim.so ${D}/usr/lib/libsgx_uae_service_sim.so
+    install -d ${D}${libdir}
+    install -m 0755 ${SGX_BUILD_DIR}/libsgx_urts.so ${D}${libdir}/libsgx_urts.so
+    install -m 0755 ${SGX_BUILD_DIR}/libsgx_uae_service.so ${D}${libdir}/libsgx_uae_service.so
+    install -m 0755 ${SGX_BUILD_DIR}/libsgx_urts_sim.so ${D}${libdir}/libsgx_urts_sim.so
+    install -m 0755 ${SGX_BUILD_DIR}/libsgx_uae_service_sim.so ${D}${libdir}/libsgx_uae_service_sim.so
 
     # Install AEs and other SGX_PSW_DIR files & directories.
     install -d ${D}/opt/intel/sgxpsw/aesm
@@ -195,12 +195,18 @@ do_install_class-target() {
     install -m 0755 ${WORKDIR}/linksgx.sh ${D}/opt/intel/sgxpsw/aesm
 
     # Install Remote Attestation-related data
-    install -d ${D}/var/opt/aesmd/data
-    install -m 0644 ${B}/psw/ae/aesm_service/data/white_list_cert_to_be_verify.bin ${D}/var/opt/aesmd/data
+    install -d ${D}${localstatedir}/opt/aesmd/data
+    install -m 0644 ${B}/psw/ae/aesm_service/data/white_list_cert_to_be_verify.bin ${D}${localstatedir}/opt/aesmd/data
 
+<<<<<<< HEAD
+=======
+    # Install prebuild_pse_vmc.db
+    install -m 0644 ${B}/psw/ae/aesm_service/data/prebuild_pse_vmc.db ${D}${localstatedir}/opt/aesmd/data
+
+>>>>>>> 67a9177... Replace dal-jhi, replace hard-coded linux paths
     # Install aesmd network configuration
-    install -d ${D}/etc
-    install -m 0644 ${B}/psw/ae/aesm_service/config/network/aesmd.conf ${D}/etc
+    install -d ${D}${sysconfdir}
+    install -m 0644 ${B}/psw/ae/aesm_service/config/network/aesmd.conf ${D}${sysconfdir}
 
     # Install aesmd.service systemd unit file
     install -d ${D}${systemd_system_unitdir}
@@ -289,9 +295,6 @@ EOF
 
 SYSTEMD_SERVICE_${PN} = "aesmd.service"
 
-# libpaths recipe provides the /lib64 symlink for pre-compiled binaries.
-RDEPENDS_${PN}_append_class-target = " libpaths"
-
 # For example, linksgx.sh needs bash shell.
 RDEPENDS_${PN} += "bash"
 
@@ -302,7 +305,7 @@ INHIBIT_PACKAGE_STRIP = "1"
 INHIBIT_PACKAGE_DEBUG_SPLIT = "1"
 
 FILES_${PN}-dev = "/opt/intel/sgxsdk"
-FILES_${PN} = "/opt/intel/sgxpsw /var/opt /etc /lib /usr/lib"
+FILES_${PN} = "/opt/intel/sgxpsw ${localstatedir}/opt ${sysconfdir} ${nonarch_base_libdir}/* ${libdir}/*"
 
 # Both PSW & SDK contain development and production worthy .so files
 # with the same names. Make sure target has only production ones in
