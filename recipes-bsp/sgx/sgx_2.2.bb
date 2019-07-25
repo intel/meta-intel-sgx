@@ -198,12 +198,6 @@ do_install_class-target() {
     install -d ${D}${localstatedir}/opt/aesmd/data
     install -m 0644 ${B}/psw/ae/aesm_service/data/white_list_cert_to_be_verify.bin ${D}${localstatedir}/opt/aesmd/data
 
-<<<<<<< HEAD
-=======
-    # Install prebuild_pse_vmc.db
-    install -m 0644 ${B}/psw/ae/aesm_service/data/prebuild_pse_vmc.db ${D}${localstatedir}/opt/aesmd/data
-
->>>>>>> 67a9177... Replace dal-jhi, replace hard-coded linux paths
     # Install aesmd network configuration
     install -d ${D}${sysconfdir}
     install -m 0644 ${B}/psw/ae/aesm_service/config/network/aesmd.conf ${D}${sysconfdir}
