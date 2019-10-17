@@ -1,0 +1,36 @@
+--- a/SampleCode/Cxx11SGXDemo/Enclave/TrustedLibrary/Libcxx.cpp
++++ b/SampleCode/Cxx11SGXDemo/Enclave/TrustedLibrary/Libcxx.cpp
+@@ -72,27 +72,27 @@
+     printf("[Lambdas] Initial array using lambdas: { ");
+ 
+     // Print the elements in an array using lambdas
+-    std::for_each(std::begin(v), std::end(v), [](int elem) { printf("%d ", elem); }); //capture specification
++    std::for_each(v.begin(), v.end(), [](int elem) { printf("%d ", elem); }); //capture specification
+     printf("}.\n");
+ 
+     // Find the first odd number using lambda as an unary predicate when calling find_if.
+-    auto first_odd_element = std::find_if(std::begin(v), std::end(v), [=](int elem) { return elem % 2 == 1; });
++    auto first_odd_element = std::find_if(v.begin(), v.end(), [=](int elem) { return elem % 2 == 1; });
+ 
+-    if (first_odd_element != std::end(v))
++    if (first_odd_element != v.end())
+         printf("[Lambdas] First odd element in the array is %d. \n", *first_odd_element);
+     else
+         printf("[Lambdas] No odd element found in the array.\n");
+ 
+     // Count the even numbers using a lambda function as an unary predicate when calling count_if.
+-    long long  number_of_even_elements = std::count_if(std::begin(v), std::end(v), [=](int  val) { return val % 2 == 0; });
++    long long  number_of_even_elements = std::count_if(v.begin(), v.end(), [=](int  val) { return val % 2 == 0; });
+     printf("[Lambdas] Number of even elements in the array is %lld.\n", number_of_even_elements);
+ 
+     // Sort the elements of an array using lambdas
+-    std::sort(std::begin(v), std::end(v), [](int e1, int e2) {return e2 < e1; });
++    std::sort(v.begin(), v.end(), [](int e1, int e2) {return e2 < e1; });
+ 
+     // Print the elements in an array using lambdas
+     printf("[Lambdas] Array after sort: { ");
+-    std::for_each(std::begin(v), std::end(v), [](int elem) { printf("%d ", elem); });
++    std::for_each(v.begin(), v.end(), [](int elem) { printf("%d ", elem); });
+     printf("}. \n");
+     printf("\n"); // end of demo
+ }

@@ -35,6 +35,7 @@ SRC_URI_append_class-target = " file://0001-Yocto-patch-for-SGX-2.0.patch \
     file://uninstall.sh \
     file://00021_sgx_target_build.patch \
     file://pcl_Makefile.patch \
+    file://Cxx11SGXDemo.patch \
 "
 
 SRC_URI[optimized_libs.md5sum] = "e5805206d5f75f510e60e3fbfe8e3a8f"
