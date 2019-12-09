@@ -1,8 +1,7 @@
 diff --git a/Makefile b/Makefile
-index 6bb4cd8..1a1ff2e 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -9,15 +9,14 @@ ifneq ($(KERNELRELEASE),)
+@@ -9,15 +9,14 @@
  		sgx_encl2.o
  	obj-m += isgx.o
  else
@@ -10,15 +9,13 @@ index 6bb4cd8..1a1ff2e 100644
 +KDIR := $(KERNEL_SRC)
  PWD  := $(shell pwd)
  
--default:
--	$(MAKE) -C $(KDIR) SUBDIRS=$(PWD) modules
-+all:
-+	$(MAKE) -C $(KDIR) M=$(PWD) modules
+ default:
+ 	$(MAKE) -C $(KDIR) M=$(PWD) modules
  
 -install: default
 -	$(MAKE) INSTALL_MOD_DIR=kernel/drivers/intel/sgx -C $(KDIR) M=$(PWD) modules_install
 -	sh -c "cat /etc/modules | grep -Fxq isgx || echo isgx >> /etc/modules"
-+modules_install:
++modules_install: default
 +	$(MAKE) -C $(KDIR) M=$(PWD) modules_install
  
  endif

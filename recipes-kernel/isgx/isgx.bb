@@ -10,10 +10,6 @@ SRC_URI = "git://github.com/intel/linux-sgx-driver.git;branch=sgx2 \
            file://isgx_Makefile_for_yocto_build.patch \
           "
 
-SRCREV = "2605efa4efb49130a1f4c3bc8d00125105a9c8a4"
+SRCREV = "4f5bb63a99b785f03bb6a03dc5402e99691b849b"
 
 S = "${WORKDIR}/git"
-
-KERNEL_MODULE_AUTOLOAD += "isgx"
-# The inherit of module.bbclass will automatically name module packages with
-# "kernel-module-" prefix as required by the oe-core build environment.
