@@ -77,7 +77,7 @@ index 6e4f565..7e6f383 100644
  INCLUDE += -I ../../../include
  
 -CFLAGS += $(INCLUDE) -fPIC -Wno-strict-prototypes
-+CFLAGS += $(INCLUDE) -fPIC -Wno-strict-prototypes -Wno-implicit-fallthrough
++CFLAGS += $(INCLUDE) -fPIC -Wno-strict-prototypes -Wno-implicit-fallthrough -Wno-stringop-overflow
  
  .PHONY: all
  all: $(LIBNAME)
