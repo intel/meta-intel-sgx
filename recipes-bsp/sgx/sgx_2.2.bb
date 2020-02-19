@@ -291,12 +291,14 @@ EOF
 
 SYSTEMD_SERVICE_${PN} = "aesmd.service"
 
-# For example, linksgx.sh needs bash shell.
+# Runtime dependencies
 RDEPENDS_${PN} += "bash"
+RDEPENDS_${PN}_x86 = "dmidecode"
+RDEPENDS_${PN}_x86-64 = "dmidecode"
 
 RRECOMMENDS_${PN} += "kernel-module-isgx"
 
-# Avoid generated binaries stripping.
+# Avoid generated binaries stripping
 INHIBIT_PACKAGE_STRIP = "1"
 INHIBIT_PACKAGE_DEBUG_SPLIT = "1"
 
