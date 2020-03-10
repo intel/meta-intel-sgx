@@ -318,3 +318,5 @@ INSANE_SKIP_${PN} = "libdir"
 INSANE_SKIP_${PN}-dev = "staticdev"
 
 BBCLASSEXTEND =+ "native nativesdk"
+
+CVE_PRODUCT = "software_guard_extensions_sdk"
