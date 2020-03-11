@@ -293,8 +293,7 @@ SYSTEMD_SERVICE_${PN} = "aesmd.service"
 
 # Runtime dependencies
 RDEPENDS_${PN} += "bash"
-RDEPENDS_${PN}_x86 = "dmidecode"
-RDEPENDS_${PN}_x86-64 = "dmidecode"
+RDEPENDS_${PN}_class-target = "dmidecode"
 
 RRECOMMENDS_${PN} += "kernel-module-isgx"
 
