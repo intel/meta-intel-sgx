@@ -24,9 +24,10 @@ LIC_FILES_CHKSUM = "file://License.txt;md5=c7a6a2fa753b1403cdbc7f1d14e11f65"
 SRC_URI = "git://github.com/intel/linux-sgx.git \
     https://download.01.org/intel-sgx/linux-2.3/optimized_libs_2.3.tar.gz;subdir=${S};name=optimized_libs \
     https://download.01.org/intel-sgx/linux-2.3/prebuilt_ae_2.3.tar.gz;subdir=${S};name=prebuilt_ae \
+    file://0001-sgx-native-removed-werror.patch \
 "
 
-SRC_URI_append_class-native = " file://0001-sgx-native-removed-werror.patch \
+SRC_URI_append_class-native = " \
                                 file://0001-sgx-patch-makefile-to-point-to-correct-ocaml-libs.patch \
                                 "
 

@@ -1,18 +1,32 @@
-From 6040c92f004cab15ab043ad354c47c88050be5ca Mon Sep 17 00:00:00 2001
+From 178a806eaec9ed0af10b7aacbc6465b2256a0667 Mon Sep 17 00:00:00 2001
 From: "Lian, Da (Landau)" <da.lian@intel.com>
 Date: Thu, 30 Nov 2017 23:02:21 +0800
-Subject: [PATCH] sgx native removed werror
+Subject: [PATCH] sgx removed werror
 
 Upstream-Status: Inappropriate [embedded-specific]
 
 Signed-off-by: Lian, Da (Landau) <da.lian@intel.com>
 ---
+ psw/uae_service/linux/Makefile  | 2 +-
  psw/urts/parser/Makefile        | 4 ----
  sdk/sign_tool/SignTool/Makefile | 3 ---
- 2 files changed, 7 deletions(-)
+ 3 files changed, 1 insertion(+), 8 deletions(-)
 
+diff --git a/psw/uae_service/linux/Makefile b/psw/uae_service/linux/Makefile
+index 8a662e8f..c348446d 100644
+--- a/psw/uae_service/linux/Makefile
++++ b/psw/uae_service/linux/Makefile
+@@ -57,7 +57,7 @@ INCLUDE += -I$(LINUX_EXTERNAL_DIR)/epid-sdk    \
+            -I$(IPC_COMMON_PROTO_DIR) \
+            -I$(LINUX_PSW_DIR)/ae/aesm_service/source
+ 
+-CXXFLAGS += -fPIC -Werror -Wno-unused-parameter -g -DPROTOBUF_INLINE_NOT_IN_HEADERS=0
++CXXFLAGS += -fPIC -Wno-unused-parameter -g -DPROTOBUF_INLINE_NOT_IN_HEADERS=0
+ 
+ EXTERNAL_LIB += -lprotobuf 
+  
 diff --git a/psw/urts/parser/Makefile b/psw/urts/parser/Makefile
-index 6bd41ea..1a54a44 100644
+index 44d0d533..fd56894f 100644
 --- a/psw/urts/parser/Makefile
 +++ b/psw/urts/parser/Makefile
 @@ -39,10 +39,6 @@ TARGET := libenclaveparser.a
@@ -27,7 +41,7 @@ index 6bd41ea..1a54a44 100644
              -I$(COMMON_DIR)/inc/internal \
              -I.                          \
 diff --git a/sdk/sign_tool/SignTool/Makefile b/sdk/sign_tool/SignTool/Makefile
-index 7ac7aaa..7360271 100644
+index 3d181882..2f5a9469 100644
 --- a/sdk/sign_tool/SignTool/Makefile
 +++ b/sdk/sign_tool/SignTool/Makefile
 @@ -31,9 +31,6 @@
@@ -41,5 +55,5 @@ index 7ac7aaa..7360271 100644
  CXXFLAGS += -fpie
  LDFLAGS := -pie $(COMMON_LDFLAGS)
 -- 
-2.7.4
+2.24.1
 
