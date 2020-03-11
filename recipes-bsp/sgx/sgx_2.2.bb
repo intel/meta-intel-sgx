@@ -26,7 +26,9 @@ SRC_URI = "git://github.com/intel/linux-sgx.git \
     https://download.01.org/intel-sgx/linux-2.3/prebuilt_ae_2.3.tar.gz;subdir=${S};name=prebuilt_ae \
 "
 
-SRC_URI_append_class-native = " file://0001-sgx-native-removed-werror.patch"
+SRC_URI_append_class-native = " file://0001-sgx-native-removed-werror.patch \
+                                file://0001-sgx-patch-makefile-to-point-to-correct-ocaml-libs.patch \
+                                "
 
 SRC_URI_append_class-target = " file://0001-Yocto-patch-for-SGX-2.0.patch \
     file://0001-Sample-Code-patch.patch \
@@ -37,6 +39,7 @@ SRC_URI_append_class-target = " file://0001-Yocto-patch-for-SGX-2.0.patch \
     file://pcl_Makefile.patch \
     file://Cxx11SGXDemo.patch \
     file://GCC9-warnings.patch \
+    file://0001-sgx-target-patch-makefile-to-point-to-correct-ocaml-.patch \
 "
 
 SRC_URI[optimized_libs.md5sum] = "e5805206d5f75f510e60e3fbfe8e3a8f"
@@ -64,6 +67,7 @@ python () {
 EXTRA_OEMAKE_class-target = "CCONLY='${CCONLY}' CCOPTS='${CCOPTS}' LDOPTS='${LDOPTS}' 'MODE=HW' 'psw'"
 # Debug build
 #EXTRA_OEMAKE_class-target_append = " 'DEBUG=1'"
+EXTRA_OEMAKE_append = " OCAML_NATIVE_LIB='${STAGING_LIBDIR_NATIVE}'"
 
 CXXFLAGS_append = " -std=c++0x ${LDFLAGS}"
 
