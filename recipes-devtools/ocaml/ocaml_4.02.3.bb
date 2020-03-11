@@ -32,6 +32,10 @@ PARALLEL_MAKEINST = ""
 do_install_class-native () {
     oe_runmake install DESTDIR=${D}
     oe_runmake install
+
+    for s in `find ${D}${bindir} -type f`; do
+        sed -i -e "1s,#!.*ocamlrun.*,#!${USRBINPATH}/env ocamlrun," ${s}
+    done
 }
 
 BBCLASSEXTEND = "native nativesdk"
