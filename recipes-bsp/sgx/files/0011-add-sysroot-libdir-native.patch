@@ -1,0 +1,24 @@
+diff --git a/sdk/sign_tool/SignTool/Makefile b/sdk/sign_tool/SignTool/Makefile
+--- a/sdk/sign_tool/SignTool/Makefile
++++ b/sdk/sign_tool/SignTool/Makefile
+@@ -36,7 +36,7 @@ CFLAGS   += -Werror
+ 
+ CFLAGS += -fpie
+ CXXFLAGS += -fpie
+-LDFLAGS := -pie $(COMMON_LDFLAGS)
++LDFLAGS := -pie $(COMMON_LDFLAGS) -L$(SYSROOT_LIBDIR)
+ 
+ INC += $(ADDED_INC)
+ INC +=  -I$(COMMON_DIR)/inc                         \
+diff --git a/sdk/encrypt_enclave/Makefile b/sdk/encrypt_enclave/Makefile
+--- a/sdk/encrypt_enclave/Makefile
++++ b/sdk/encrypt_enclave/Makefile
+@@ -39,7 +39,7 @@ INC_DIR	:= -I$(COMMON_DIR)/inc -I$(COMMON_DIR)/inc/internal -I.
+ CXXFLAGS += $(INC_DIR) -Wno-attributes -g -mrdrnd -fpie
+ LDFLAGS := -pie $(COMMON_LDFLAGS)
+ 
+-LINK_FLAGS := -lcrypto -L$(BUILD_DIR) -lsgx_tservice
++LINK_FLAGS := -L"$(SYSROOT_LIBDIR)" -lcrypto -L$(BUILD_DIR) -lsgx_tservice
+ CPP_FILES := encryptip.cpp
+ OBJS := $(CPP_FILES:.cpp=.o)
+ TOOL_NAME := sgx_encrypt

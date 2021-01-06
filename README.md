@@ -25,7 +25,7 @@ meta-intel@lists.yoctoproject.org
 Furthermore, in that email, make sure to copy the maintainer and add
 "[meta-intel-sgx]" prefix to the subject.
 
-Maintainer: Naveen R. Iyer <naveen.iyer@intel.com>
+Maintainer: Gary West <gary.west@intel.com>
 
 ## Adding the meta-intel-sgx layer to your Yocto build
 
@@ -99,5 +99,5 @@ DISTRO_FEATURES_append = " sgx"
 ## Copying
 
 Unless noted otherwise, files are provided under the MIT license (see COPYING.MIT)
-and are Copyright © Intel Corporation 2018.
+and are Copyright © Intel Corporation 2021.
 

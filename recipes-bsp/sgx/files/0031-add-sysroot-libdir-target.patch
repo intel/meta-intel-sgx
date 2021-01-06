@@ -1,0 +1,12 @@
+diff --git a/psw/uae_service/linux/Makefile b/psw/uae_service/linux/Makefile
+--- a/psw/uae_service/linux/Makefile
++++ b/psw/uae_service/linux/Makefile
+@@ -126,7 +126,7 @@ OBJ := $(C_SRC:.c=.o) $(SRC:.cpp=.o) $(IPC_SRC:.cpp=.o)  $(PROTOBUF_SRC:.cc=.o)
+ 
+ LEGACY_OBJ := $(LEGACY_SRC:.cpp=.o)
+ 
+-LDUFLAGS:= -pthread $(COMMON_LDFLAGS)
++LDUFLAGS:= -pthread -L"$(SYSROOT_LIBDIR)" $(COMMON_LDFLAGS)
+ 
+ LIBNAME  := libsgx_epid.so libsgx_launch.so libsgx_quote_ex.so
+ ifndef DEBUG
