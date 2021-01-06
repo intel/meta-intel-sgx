@@ -1,0 +1,13 @@
+--- a/stdlib/Makefile
++++ b/stdlib/Makefile
+@@ -157,8 +157,8 @@
+ ifeq "$(HASHBANGSCRIPTS)" "true"
+ $(CAMLHEADERS): $(ROOTDIR)/Makefile.config
+ 	for suff in '' d i; do \
+-	  echo '#!$(BINDIR)/ocamlrun'$$suff > camlheader$$suff && \
+-	  echo '#!$(TARGET_BINDIR)/ocamlrun'$$suff >target_camlheader$$suff; \
++	  echo '#!$(USRBINPATH)/env ocamlrun'$$suff > camlheader$$suff && \
++	  echo '#!$(USRBINPATH)/env ocamlrun'$$suff >target_camlheader$$suff; \
+ 	done && \
+ 	echo '#!' | tr -d '\012' > camlheader_ur;
+ else # Hashbang scripts not supported
