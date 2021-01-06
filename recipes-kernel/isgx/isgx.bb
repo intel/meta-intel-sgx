@@ -10,6 +10,7 @@ SRC_URI = "git://github.com/intel/linux-sgx-driver.git \
            file://isgx_Makefile_for_yocto_build.patch \
           "
 
-SRCREV = "51c4821b8a4fa0cba69f532474a13c298c5b4037"
+SRCREV = "4505f07271ed82230fce55b8d0d820dbc7a27c5a"
 
 S = "${WORKDIR}/git"
+
