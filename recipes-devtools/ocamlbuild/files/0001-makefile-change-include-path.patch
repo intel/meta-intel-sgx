@@ -1,0 +1,12 @@
+diff -Naurw a/configure.make b/configure.make
+--- a/configure.make	2019-02-23 14:46:00.000000000 +0000
++++ b/configure.make	2020-12-31 21:06:37.645348821 +0000
+@@ -6,7 +6,7 @@
+ # from the main Makefile, but this made it not robust to addition of
+ # new variables to this ocaml/Makefile.config that we do not control.
+ 
+-include $(shell ocamlc -where)/Makefile.config
++include $(libdir)/ocaml/Makefile.config
+ 
+ OCAML_PREFIX = $(PREFIX)
+ OCAML_BINDIR = $(BINDIR)
