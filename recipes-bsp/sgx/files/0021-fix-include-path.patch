@@ -1,17 +1,12 @@
-Use correct sysroot in include path for cross-compilation
-
-Upstream-Status: Pending
-
 diff --git a/sdk/protected_code_loader/Makefile b/sdk/protected_code_loader/Makefile
-index 5b2bc83..aa20abf 100644
 --- a/sdk/protected_code_loader/Makefile
 +++ b/sdk/protected_code_loader/Makefile
 @@ -84,8 +84,7 @@ PCL_INCLUDE_PATH	:= -I$(COMMON_DIR)/inc \
                         -I$(COMMON_DIR)/inc/internal \
                         -I./crypto \
                         -I./unseal \
--                       -I/usr/include/x86_64-linux-gnu \
 -                       -I/usr/include \
+-                       -I/usr/include/x86_64-linux-gnu \
 +                       -I=/usr/include \
                         -I./ 
  
