@@ -1,0 +1,12 @@
+diff --git a/external/CppMicroServices/CMakeLists.txt b/external/CppMicroServices/CMakeLists.txt
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -254,7 +254,7 @@ endif()
+ # for the host built usResourceCompiler. ImportExecutables.cmake can be included by the
+ # cross-compiled build to access the host built usResourceCompiler.
+ #
+-set(IMPORT_EXECUTABLES "${CMAKE_BINARY_DIR}/ImportExecutables.cmake" CACHE FILEPATH "A file containing the CMake target definition for the host build version of usResourceCompiler.")
++set(IMPORT_EXECUTABLES "${CMAKE_HOST_BINARY_DIR}/ImportExecutables.cmake" CACHE FILEPATH "A file containing the CMake target definition for the host build version of usResourceCompiler.")
+ 
+ #-----------------------------------------------------------------------------
+ # Testing configuration
