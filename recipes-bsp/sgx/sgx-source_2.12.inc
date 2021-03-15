@@ -20,6 +20,8 @@ SRC_URI[openssl.sha256sum] = "ddb04774f1e32f0c49751e21b67216ac87852ceb056b75209a
 SRC_URI += "https://download.01.org/intel-sgx/sgx-dcap/1.9/linux/prebuilt_dcap_1.9.tar.gz;name=prebuilt_dcap;subdir=${S}/external/dcap_source/QuoteGeneration"
 SRC_URI[prebuilt_dcap.sha256sum] = "8cd0249ee49dbfd589b257cd0fa14d374d01b6c210ca7d0a14e618a48bbdb82b"
 
+SRC_URI += "file://0003-default-python.patch"
+
 ### configure ###
 
 do_configure_prepend () {

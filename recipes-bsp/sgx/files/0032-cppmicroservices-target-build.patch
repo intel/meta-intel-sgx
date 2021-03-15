@@ -1,0 +1,32 @@
+diff --git a/psw/ae/aesm_service/Makefile b/psw/ae/aesm_service/Makefile
+--- a/psw/ae/aesm_service/Makefile
++++ b/psw/ae/aesm_service/Makefile
+@@ -86,13 +86,9 @@ CMAKE := $(HOME)/cache/bin/cmake
+
+ .PHONY: CPPMICROSERVICES
+ $(CPPMICROSERVICES):
+-	mkdir -p $(CPPMICROSERVICES_DIR)/build
+-ifeq ($(shell test $(CMAKE_VERSION) -lt 32 && echo 1), 1)
+-	$(CPPMICROSERVICES_DIR)/install_cmake.sh
+-	cd $(CPPMICROSERVICES_DIR)/build && $(CMAKE) -DCMAKE_COMMAND=$(CMAKE) $(CPPMICROSERVICES_CONFIG) ../ && $(MAKE) && $(MAKE) install
+-else
+-	cd $(CPPMICROSERVICES_DIR)/build && cmake $(CPPMICROSERVICES_CONFIG) ../ && $(MAKE) && $(MAKE) install
+-endif
++	mkdir -p $(CPPMICROSERVICES_DIR)/build/lib
++	cp $(SYSROOT_LIBDIR)/libCppMicroServices.so.4.0.0 $(CPPMICROSERVICES_DIR)/build/lib
++	ln -s libCppMicroServices.so $(CPPMICROSERVICES_DIR)/build/lib
+
+ source/build/CMakeCache.txt: $(CPPMICROSERVICES)
+ ifeq ($(shell test $(CMAKE_VERSION) -lt 30 && echo 1), 1)
+@@ -106,9 +102,9 @@ RDRAND: $(RDRAND_MAKEFILE)
+
+ $(RDRAND_MAKEFILE):
+ ifeq ($(ARCH), x86)
+-	@cd $(RDRAND_LIBDIR);./configure
++	@cd $(RDRAND_LIBDIR);./configure --host=$(TARGET_SYS) --build=$(BUILD_SYS)
+ else
+-	@cd $(RDRAND_LIBDIR);./configure CFLAGS=-fPIC
++	@cd $(RDRAND_LIBDIR);./configure --host=$(TARGET_SYS) --build=$(BUILD_SYS) CFLAGS=-fPIC
+ endif
+
+ .PHONY: urts

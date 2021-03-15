@@ -1,0 +1,30 @@
+diff --git a/linux/installer/common/psw/createTarball.sh b/linux/installer/common/psw/createTarball.sh
+--- a/linux/installer/common/psw/createTarball.sh
++++ b/linux/installer/common/psw/createTarball.sh
+@@ -41,6 +41,11 @@ LINUX_INSTALLER_COMMON_DIR="${LINUX_INSTALLER_DIR}/common"
+
+ INSTALL_PATH=${SCRIPT_DIR}/output
+
++python()
++{
++    /usr/bin/env python3 "$@"
++}
++
+ # Cleanup
+ rm -fr ${INSTALL_PATH}
+
+diff --git a/linux/installer/common/sdk/createTarball.sh b/linux/installer/common/sdk/createTarball.sh
+--- a/linux/installer/common/sdk/createTarball.sh
++++ b/linux/installer/common/sdk/createTarball.sh
+@@ -41,6 +41,11 @@ LINUX_INSTALLER_COMMON_DIR="${LINUX_INSTALLER_DIR}/common"
+
+ INSTALL_PATH=${SCRIPT_DIR}/output
+
++python()
++{
++    /usr/bin/env python3 "$@"
++}
++
+ # Cleanup
+ rm -fr ${INSTALL_PATH}
+
