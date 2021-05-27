@@ -21,7 +21,8 @@ SRC_URI += " \
 EXTRA_OEMAKE += "psw_install_pkg"
 
 do_compile_prepend () {
-    source ${RECIPE_SYSROOT}${sgxsdkpath}-cross/environment
+    export SGX_SDK="${RECIPE_SYSROOT}${sgxsdkpath}-cross"
+    export PATH=$PATH:$SGX_SDK/bin:$SGX_SDK/bin/x64
 }
 
 ### install ###
