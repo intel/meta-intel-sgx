@@ -1,0 +1,50 @@
+--- a/Makefile
++++ b/Makefile
+@@ -8,20 +8,14 @@ intel_sgx-y := encl.o main.o driver.o ioctl.o
+ 
+ else
+ 
+-KDIR := /lib/modules/$(shell uname -r)/build
+-
+-INKERNEL_SGX :=$(shell cat $(KDIR)/.config | grep "CONFIG_INTEL_SGX=y")
+-ifneq ($(INKERNEL_SGX),)
+-default:
+-	$(error Can't install DCAP SGX driver with inkernel SGX support)
+-
+-else
+-
++KDIR := $(KERNEL_SRC)
+ PWD  := $(shell pwd)
+ default:
+ 	$(MAKE) -C $(KDIR) M=$(PWD) CFLAGS_MODULE="-I$(PWD) -I$(PWD)/include" modules
+ 
+-endif
++modules_install: default
++	$(MAKE) -C $(KDIR) M=$(PWD) CFLAGS_MODULE="-I$(PWD) -I$(PWD)/include" modules_install
++
+ endif
+ 
+ clean:
+
+
+
+--- a/main.c
++++ b/main.c
+@@ -31,6 +31,8 @@ static LIST_HEAD(sgx_active_page_list);
+ static DEFINE_SPINLOCK(sgx_active_page_list_lock);
+ static void (*k_mmput_async)(struct mm_struct* mm);
+ 
++void mmput_async(struct mm_struct* mm) { mmput (mm); }
++
+ /**
+  * sgx_mark_page_reclaimable() - Mark a page as reclaimable
+  * @page:	EPC page
+@@ -791,7 +793,7 @@ static int __init sgx_init(void)
+ #if (LINUX_VERSION_CODE >= KERNEL_VERSION(5, 7, 0) )
+ #pragma message "kernel version may not be supported"
+ #endif
+-	k_mmput_async = (void*)kallsyms_lookup_name("mmput_async");
++	k_mmput_async = mmput_async;
+ 	if (!k_mmput_async){
+ 		pr_err("mmput_async support missing from kernel.\n");
+ 		return -EFAULT;

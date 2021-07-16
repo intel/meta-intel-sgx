@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.1.0] - 2021-07-19
+
+### Added
+
+- Support for DCAP SGX kernel driver.
+- Support for DCAP Remote Attestation using ECDSA.
+
 ## [2.0.0] - 2021-04-19
 
 ### Changed
