@@ -43,25 +43,31 @@ FILES_${PN}  += "${sgxrootdir}"
 
 # TODO: Fix script or implement install on first boot.
 # This script causes fist boot to hang.
-#pkg_postinst_ontarget_${PN} () {
+pkg_postinst_ontarget_${PN} () {
+    # Verify on target
+    if [ -z "$D" ]; then
 
-#    Install SDK (optional)
-#    if [ -f "${sgxrootdir}/package/sgx_linux_x64_sdk_2.12.100.3.bin" ]; then
-#        "${sgxrootdir}/package/sgx_linux_x64_sdk_2.12.100.3.bin" --prefix /opt/intel
-#    fi
+        # Install SDK (optional)
+        if [ -e "${sgxrootdir}/package/sgx_linux_x64_sdk_2.12.100.3.bin" ]; then
+            "${sgxrootdir}/package/sgx_linux_x64_sdk_2.12.100.3.bin" --prefix /opt/intel < /dev/null
+        fi
 
-#    Install PSW
-#    "${sgxrootdir}/package/sgx_linux_x64_psw_2.12.100.3.bin"
+        # Install PSW
+        if [ -e "${sgxrootdir}/package/sgx_linux_x64_psw_2.12.100.3.bin" ]; then
+            "${sgxrootdir}/package/sgx_linux_x64_psw_2.12.100.3.bin" < /dev/null &
+            sleep 10
+        fi
 
-#    Install DCAP libraries (optional)
-#    if [ -f "${D}/opt/intel/package/sgx-dcap-libs.tar" ]; then
-#        tar xvf "${D}/opt/intel/package/sgx-dcap-libs.tar" -C "/opt/intel/sgxpsw/aesm"
-#    fi
+        # Install DCAP libraries (optional)
+        if [ -f "${sgxrootdir}/package/sgx-dcap-libs.tar" ]; then
+            tar xvf "${sgxrootdir}/package/sgx-dcap-libs.tar" -C "${sgxrootdir}/sgxpsw/aesm"
+        fi
 
-#    Remove install binaries
-#    rm -rf "${sgxrootdir}/package"
+        # Remove install binaries
+        echo rm -rf "${sgxrootdir}/package"
 
-#}
+    fi
+}
 
 ### ###
 
