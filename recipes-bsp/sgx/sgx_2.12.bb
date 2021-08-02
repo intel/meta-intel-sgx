@@ -41,8 +41,7 @@ do_install () {
 SYSROOT_DIRS += "${sgxrootdir}"
 FILES_${PN}  += "${sgxrootdir}"
 
-# TODO: Fix script or implement install on first boot.
-# This script causes fist boot to hang.
+#Script or implement install on first boot.
 pkg_postinst_ontarget_${PN} () {
     # Verify on target
     if [ -z "$D" ]; then

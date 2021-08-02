@@ -6,7 +6,7 @@ DEPENDS += " virtual/kernel"
 
 inherit module
 
-SRC_URI  = "git://git@github.com/intel/SGXDataCenterAttestationPrimitives.git"
+SRC_URI  = "git://github.com/intel/SGXDataCenterAttestationPrimitives.git;protocol=https"
 SRC_URI += "file://build_kernel_yocto.patch"
 
 SRCREV = "98976322e8b58e23256355f5cf90b9e30e37d8c1"
@@ -14,16 +14,4 @@ SRCREV = "98976322e8b58e23256355f5cf90b9e30e37d8c1"
 S = "${WORKDIR}/git/driver/linux"
 
 RPROVIDES_${PN} += "kernel-module-${PN}"
-
-### compile ###
-
-#do_compile () { 
-#  #cd driver/linux
-#  module_do_compile
-#}
-#
-#do_install () {
-#  ls
-#}
-
 

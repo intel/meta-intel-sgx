@@ -16,16 +16,12 @@ D_prebuilt_dcap = "${S}/QuoteGeneration"
 D_sgxssl="${S}/QuoteVerification/sgxssl"
 D_openssl="${S}/QuoteVerification/sgxssl/openssl_source"
 
-SRC_URI  = "git://git@github.com/intel/SGXDataCenterAttestationPrimitives.git"
+SRC_URI  = "git://github.com/intel/SGXDataCenterAttestationPrimitives.git;protocol=https"
 SRCREV = "98976322e8b58e23256355f5cf90b9e30e37d8c1"
 
-### configure prebuilt ###
+### prebuilt sgx dcap source ###
 SRC_URI += "https://download.01.org/intel-sgx/sgx-dcap/1.9/linux/prebuilt_dcap_1.9.tar.gz;name=prebuilt_dcap;subdir=${D_prebuilt_dcap}"
 SRC_URI[prebuilt_dcap.sha256sum] = "8cd0249ee49dbfd589b257cd0fa14d374d01b6c210ca7d0a14e618a48bbdb82b"
-
-configure_prebuilt () {
-    :
-}
 
 ### configure sgxssl ###
 S_sgxssl="${WORKDIR}/sgxssl"
@@ -48,6 +44,7 @@ configure_sgxssl () {
 }
 
 ### configure openssl ###
+# sgxssl requires openssl-1.1.1g for compilation and liniking, hence installing to sgx WORKDIR.
 S_openssl="${WORKDIR}/openssl"
 File_openssl="openssl-1.1.1g"
 SRC_URI += "https://www.openssl.org/source/${File_openssl}.tar.gz;unpack=0;name=openssl;subdir=${S_openssl}"
@@ -67,7 +64,6 @@ configure_openssl () {
 ### configure ###
 
 do_configure () {
-    configure_prebuilt
     configure_sgxssl
     configure_openssl
 }
