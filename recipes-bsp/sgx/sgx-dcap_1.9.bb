@@ -83,7 +83,7 @@ do_compile_prepend () {
 do_install () {
     install -d "${D}/opt/intel/package"
     cd "${S}/QuoteGeneration/build/linux"
-    tar cvf "${D}/opt/intel/package/sgx-dcap-libs.tar" *.so"
+    tar cvf "${D}/opt/intel/package/sgx-dcap-libs.tar" *.so
 }
 
 ### package ###
