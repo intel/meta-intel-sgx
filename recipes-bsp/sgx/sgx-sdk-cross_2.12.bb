@@ -1,5 +1,6 @@
 # Packages supported
 # sgx-sdk-cross : SGX Software Development Kit (SDK) on build host.
+# Compatible only with x64 host
 
 inherit native
 
