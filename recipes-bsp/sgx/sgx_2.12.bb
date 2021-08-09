@@ -29,25 +29,49 @@ do_compile_prepend () {
 
 do_install () {
     # Package PSW installer
-    install -d "${D}${sgxdirprefix}${sgxrootdir}"
-    install -m 0755 "${B}/linux/installer/bin/sgx_linux_x64_psw_2.12.100.3.bin" "${D}${sgxdirprefix}${sgxrootdir}"
+    install -d "${D}${sgxdirprefix}${sgxrootdir}/package"
+    install -m 0755 "${RECIPE_SYSROOT}${sgxrootdir}/package/sgx_linux_x64_sdk_2.12.100.3.bin" "${D}${sgxdirprefix}${sgxrootdir}/package"
+    install -m 0755 "${B}/linux/installer/bin/sgx_linux_x64_psw_2.12.100.3.bin" "${D}${sgxdirprefix}${sgxrootdir}/package"
+
+    # Package PSW installer
 }
 
 ### package ###
 
 SYSROOT_DIRS += "${sgxrootdir}"
-FILES_${PN}  += "${sgxrootdir}/sgx_linux_x64_psw_2.12.100.3.bin"
+FILES_${PN}  += "${sgxrootdir}"
 
+#Script or implement install on first boot.
 pkg_postinst_ontarget_${PN} () {
-    "${sgxrootdir}/sgx_linux_x64_psw_2.12.100.3.bin"
-    rm -f "${sgxrootdir}/sgx_linux_x64_psw_2.12.100.3.bin"
+    # Verify on target
+    if [ -z "$D" ]; then
+
+        # Install SDK (optional)
+        if [ -e "${sgxrootdir}/package/sgx_linux_x64_sdk_2.12.100.3.bin" ]; then
+            "${sgxrootdir}/package/sgx_linux_x64_sdk_2.12.100.3.bin" --prefix /opt/intel < /dev/null
+        fi
+
+        # Install PSW
+        if [ -e "${sgxrootdir}/package/sgx_linux_x64_psw_2.12.100.3.bin" ]; then
+            "${sgxrootdir}/package/sgx_linux_x64_psw_2.12.100.3.bin" < /dev/null &
+            sleep 10
+        fi
+
+        # Install DCAP libraries (optional)
+        if [ -f "${sgxrootdir}/package/sgx-dcap-libs.tar" ]; then
+            tar xvf "${sgxrootdir}/package/sgx-dcap-libs.tar" -C "${sgxrootdir}/sgxpsw/aesm"
+        fi
+
+        # Remove install binaries
+        echo rm -rf "${sgxrootdir}/package"
+
+    fi
 }
 
 ### ###
 
 # Runtime dependencies
 RDEPENDS_${PN} += "bash"
-RRECOMMENDS_${PN} += "kernel-module-isgx"
 
-CVE_PRODUCT = "software_guard_extensions_sdk"
+CVE_PRODUCT = "software_guard_extensions_platform"
 

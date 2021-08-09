@@ -1,5 +1,6 @@
 # Packages supported
 # sgx-sdk-cross : SGX Software Development Kit (SDK) on build host.
+# Compatible only with x64 host
 
 inherit native
 
@@ -25,8 +26,8 @@ EXTRA_OEMAKE += "OCAMLLIB='${STAGING_LIBDIR_NATIVE}/ocaml' -C sdk signtool edger
 ### install ###
 
 do_install () {
-    install -d ${D}${sgxdirprefix}${sgxrootdir}
-    cp -r ${RECIPE_SYSROOT}${sgxsdkpath} ${D}${sgxdirprefix}${sgxsdkpath}-cross
+    ${RECIPE_SYSROOT}${sgxrootdir}/package/sgx_linux_x64_sdk_2.12.100.3.bin --prefix="${D}${sgxdirprefix}${sgxrootdir}"
+    mv "${D}${sgxdirprefix}${sgxsdkpath}" "${D}${sgxdirprefix}${sgxsdkpath}-cross"
     rm -f ${D}${sgxdirprefix}${sgxsdkpath}-cross/bin/x64/*
     install -m 0755 ${B}/build/linux/sgx_sign    ${D}${sgxdirprefix}${sgxsdkpath}-cross/bin/x64
     install -m 0755 ${B}/build/linux/sgx_edger8r ${D}${sgxdirprefix}${sgxsdkpath}-cross/bin/x64
@@ -35,7 +36,7 @@ do_install () {
 
 ### ###
 
-SYSROOT_DIRS += "${sgxdirprefix}${sgxrootdir}"
+SYSROOT_DIRS += "${sgxdirprefix}${sgxsdkpath}-cross"
 FILES_${PN}-dev += "${sgxsdkpath}-cross"
 
 CVE_PRODUCT = "software_guard_extensions_sdk"

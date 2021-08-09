@@ -24,20 +24,15 @@ EXTRA_OEMAKE += "OCAMLLIB='${STAGING_LIBDIR_NATIVE}/ocaml' sdk_install_pkg"
 ### install ###
 
 do_install () {
-    "${S}/linux/installer/bin/sgx_linux_x64_sdk_2.12.100.3.bin" --prefix="${D}${sgxdirprefix}${sgxrootdir}"
+    mkdir -p "${D}${sgxdirprefix}${sgxrootdir}/package"
+    cp "${S}/linux/installer/bin/sgx_linux_x64_sdk_2.12.100.3.bin" "${D}${sgxdirprefix}${sgxrootdir}/package"
 }
 
 ### package ###
 
-SYSROOT_DIRS += "${sgxdirprefix}${sgxrootdir}"
+SYSROOT_DIRS += "${sgxdirprefix}${sgxrootdir}/package"
 
-INSANE_SKIP_${PN}-dev = "dev-elf staticdev ldflags"
-
-FILES_${PN}-dev += "${sgxsdkpath}"
-
-# Dev only package.
-# Allowing an empty package enables the dev package for sdk images
-ALLOW_EMPTY_${PN}     = "1"
+FILES_${PN}-dev += "${sgxrootdir}"
 
 ### ###
 
