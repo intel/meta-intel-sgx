@@ -13,5 +13,5 @@ SRCREV = "98976322e8b58e23256355f5cf90b9e30e37d8c1"
 
 S = "${WORKDIR}/git/driver/linux"
 
-RPROVIDES_${PN} += "kernel-module-${PN}"
+RPROVIDES:${PN} += "kernel-module-${PN}"
 

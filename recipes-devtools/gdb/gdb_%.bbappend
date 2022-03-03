@@ -1,1 +1,1 @@
-PACKAGECONFIG_append = " python"
+PACKAGECONFIG:append = " python"

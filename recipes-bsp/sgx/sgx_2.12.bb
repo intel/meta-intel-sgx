@@ -20,7 +20,7 @@ SRC_URI += " \
 # Build target(s)
 EXTRA_OEMAKE += "psw_install_pkg"
 
-do_compile_prepend () {
+do_compile:prepend () {
     export SGX_SDK="${RECIPE_SYSROOT}${sgxsdkpath}-cross"
     export PATH=$PATH:$SGX_SDK/bin:$SGX_SDK/bin/x64
 }
@@ -39,10 +39,10 @@ do_install () {
 ### package ###
 
 SYSROOT_DIRS += "${sgxrootdir}"
-FILES_${PN}  += "${sgxrootdir}"
+FILES:${PN}  += "${sgxrootdir}"
 
 #Script or implement install on first boot.
-pkg_postinst_ontarget_${PN} () {
+pkg_postinst_ontarget:${PN} () {
     # Verify on target
     if [ -z "$D" ]; then
 
@@ -71,7 +71,7 @@ pkg_postinst_ontarget_${PN} () {
 ### ###
 
 # Runtime dependencies
-RDEPENDS_${PN} += "bash"
+RDEPENDS:${PN} += "bash"
 
 CVE_PRODUCT = "software_guard_extensions_platform"
 

@@ -73,7 +73,7 @@ do_configure () {
 # Build target(s)
 EXTRA_OEMAKE += "QuoteGeneration"
 
-do_compile_prepend () {
+do_compile:prepend () {
     export SGX_SDK="${RECIPE_SYSROOT}/opt/intel/sgxsdk-cross"
     export PATH=$PATH:$SGX_SDK/bin:$SGX_SDK/bin/x64
 }
@@ -89,7 +89,7 @@ do_install () {
 ### package ###
 
 SYSROOT_DIRS += "/opt/intel"
-FILES_${PN}  += "/opt/intel"
+FILES:${PN}  += "/opt/intel"
 
 ### ###
 

@@ -61,7 +61,7 @@ Add the following to local.conf in order to enable Intel(R) SGX PSW:
 
 ```
 # Enable Intel(R) SGX PSW support.
-IMAGE_INSTALL_append = " sgx"
+IMAGE_INSTALL:append = " sgx"
 ```
 
 Add the following to local.conf in order to enable Intel(R) SGX PSW and
@@ -69,7 +69,7 @@ SGX SDK:
 
 ```
 # Enable Intel(R) SGX PSW & SDK support.  
-IMAGE_INSTALL_append = " sgx-dev"
+IMAGE_INSTALL:append = " sgx-dev"
 ```
 
 #### Step 2/2) Enable the driver
@@ -85,7 +85,7 @@ out-of-tree ('isgx') driver must be used. To use the SGX out-of-tree
 driver, add the following line to local.conf:  
 
 ```
-IMAGE_INSTALL_append = " isgx"
+IMAGE_INSTALL:append = " isgx"
 ```
 
 On the other hand, if you choose to pick the Unlocked Mode, then SGX
@@ -93,7 +93,7 @@ in-kernel driver must be used. To use the in-kernel SGX driver, add the
 following to local.conf:
 
 ```
-DISTRO_FEATURES_append = " sgx"
+DISTRO_FEATURES:append = " sgx"
 ```
 
 ## Copying

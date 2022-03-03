@@ -37,7 +37,7 @@ do_install () {
 ### ###
 
 SYSROOT_DIRS += "${sgxdirprefix}${sgxsdkpath}-cross"
-FILES_${PN}-dev += "${sgxsdkpath}-cross"
+FILES:${PN}-dev += "${sgxsdkpath}-cross"
 
 CVE_PRODUCT = "software_guard_extensions_sdk"
 

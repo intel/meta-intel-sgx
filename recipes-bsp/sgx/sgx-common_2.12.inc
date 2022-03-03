@@ -13,8 +13,8 @@ LICENSE = " \
 LIC_FILES_CHKSUM = "file://License.txt;md5=a126e7fbbb897ad5819596908b509eae"
 
 # Packages required to build
-DEPENDS_append = " openssl-native cmake-native"
-DEPENDS_append_class-target = " openssl"
+DEPENDS:append = " openssl-native cmake-native"
+DEPENDS:append:class-target = " openssl"
 
 # Parallel make does not work with some recipes
 PARALLEL_MAKE = ""
@@ -34,8 +34,8 @@ export BUILD_SYS
 export TARGET_SYS
 
 # SGX environment variables
-sgxdirprefix_class-native = "${RECIPE_SYSROOT_NATIVE}"
-sgxdirprefix_class-target = ""
+sgxdirprefix:class-native = "${RECIPE_SYSROOT_NATIVE}"
+sgxdirprefix:class-target = ""
 sgxrootdir = "/opt/intel"
 
 sgxsdkbase = "sgxsdk"
