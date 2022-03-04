@@ -32,7 +32,7 @@ do_install () {
 
 SYSROOT_DIRS += "${sgxdirprefix}${sgxrootdir}/package"
 
-FILES_${PN}-dev += "${sgxrootdir}"
+FILES:${PN}-dev += "${sgxrootdir}"
 
 ### ###
 

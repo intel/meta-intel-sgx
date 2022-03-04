@@ -24,7 +24,7 @@ SRC_URI += "file://0003-default-python.patch"
 
 ### configure ###
 
-do_configure_prepend () {
+do_configure:prepend () {
     # SRC_URI is located at ${S}
 
     # optimized libs are unpacke in ${S}
