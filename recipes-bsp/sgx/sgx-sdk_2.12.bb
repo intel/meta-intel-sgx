@@ -6,7 +6,7 @@
 require sgx-common_2.12.inc
 
 # Packages required to build.
-DEPENDS += "ocaml-native ocamlbuild-native"
+DEPENDS += "ocaml-native ocamlbuild-native autoconf-native automake-native"
 
 ### patch ###
 
@@ -20,6 +20,8 @@ SRC_URI += " \
 
 # Build environment variables
 EXTRA_OEMAKE += "OCAMLLIB='${STAGING_LIBDIR_NATIVE}/ocaml' sdk_install_pkg"
+CFLAGS:append = " -Wno-deprecated-declarations"
+CXXFLAGS:append = " -Wno-deprecated-declarations"
 
 ### install ###
 

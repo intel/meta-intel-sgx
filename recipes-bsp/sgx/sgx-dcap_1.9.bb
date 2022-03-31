@@ -76,6 +76,8 @@ EXTRA_OEMAKE += "QuoteGeneration"
 do_compile:prepend () {
     export SGX_SDK="${RECIPE_SYSROOT}/opt/intel/sgxsdk-cross"
     export PATH=$PATH:$SGX_SDK/bin:$SGX_SDK/bin/x64
+    export LIB_PATH="${RECIPE_SYSROOT}-native/usr/lib"
+    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$LIB_PATH
 }
 
 ### install ###
