@@ -1,0 +1,32 @@
+From a13dbba7dec2b0212fa527d52064f5a6aaf7a72c Mon Sep 17 00:00:00 2001
+From: Preeti Sachan <preeti.sachan@intel.com>
+Date: Sat, 26 Mar 2022 14:30:34 -0400
+Subject: [PATCH] Utils.h: fix build with gcc 11
+
+Some C++ Standard Library headers have been changed in gcc 11 to
+no longer include other headers that they do need to depend on.
+
+Include exception explicitly to avoid:
+external/CppMicroServices/framework/src/util/Utils.h:84:35: error: 'exception_ptr'
+in namespace 'std' does not name a type; did you mean 'exception'?
+
+Signed-off-by: Preeti Sachan <preeti.sachan@intel.com>
+---
+ external/CppMicroServices/framework/src/util/Utils.h | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/external/CppMicroServices/framework/src/util/Utils.h b/external/CppMicroServices/framework/src/util/Utils.h
+index b1a2721d..b73a4d76 100644
+--- a/external/CppMicroServices/framework/src/util/Utils.h
++++ b/external/CppMicroServices/framework/src/util/Utils.h
+@@ -26,6 +26,7 @@
+ #include "cppmicroservices/FrameworkExport.h"
+ 
+ #include <string>
++#include <exception>
+ 
+ namespace cppmicroservices {
+ 
+-- 
+2.25.1
+

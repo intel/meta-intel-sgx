@@ -11,6 +11,8 @@ require sgx-common_2.12.inc
 # Packages required to build.
 DEPENDS += "ocaml-native ocamlbuild-native"
 DEPENDS += "sgx-sdk"
+CFLAGS:append = " -Wno-deprecated-declarations"
+CXXFLAGS:append = " -Wno-deprecated-declarations"
 
 ### patch ###
 
