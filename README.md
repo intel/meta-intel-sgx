@@ -25,7 +25,8 @@ meta-intel@lists.yoctoproject.org
 Furthermore, in that email, make sure to copy the maintainer and add
 "[meta-intel-sgx]" prefix to the subject.
 
-Maintainer: Gary West <gary.west@intel.com>
+Maintainers: Prakash, Chandra e-mail: prakash1.chandra@intel.com  
+Adithya Nagaraj Baglody : e-mail: adithya.nagaraj.baglody@intel.com
 
 ## Adding the meta-intel-sgx layer to your Yocto build
 
