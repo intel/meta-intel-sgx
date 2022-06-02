@@ -20,7 +20,8 @@ SRCREV = "a21f2d9dd77e7672b00f99f9b61bc81cc44e5954"
 
 # Patches
 SRC_URI:append:class-target += "file://0001-host-bin.patch \
-                                file://0001-fix-build-with-gcc-11.patch;striplevel=3"
+                               "
+SRC_URI:append = " file://0001-fix-build-with-gcc-11.patch;striplevel=3"
 
 # Source directory
 S = "${WORKDIR}/git/external/CppMicroServices"
