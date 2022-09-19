@@ -1,7 +1,7 @@
 SUMMARY = "OCaml is a ML language implementation with a class-based object system."
 HOMEPAGE = "https://https://github.com/ocaml/ocaml"
 
-LICENSE = "LGPL-2.1"
+LICENSE = "LGPL-2.1-only"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=4f72f33f302a53dc329f4d3819fe14f9"
 
 # Packages supported

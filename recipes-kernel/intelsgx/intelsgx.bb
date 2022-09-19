@@ -1,5 +1,5 @@
 SUMMARY = "Intel(R) SGX Data Center Attestation Primitives driver"
-LICENSE = "BSD-3-Clause | GPL-2.0"
+LICENSE = "BSD-3-Clause | GPL-2.0-only"
 LIC_FILES_CHKSUM = "file://License.txt;md5=633d1f5182ada7cd064194532a4a79d4"
 
 DEPENDS += " virtual/kernel"
