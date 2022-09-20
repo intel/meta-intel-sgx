@@ -1,7 +1,7 @@
 SUMMARY = "OCamlbuild is a generic build tool, that has built-in rules for building OCaml library and programs."
 HOMEPAGE = "https://github.com/ocaml/ocamlbuild"
 
-LICENSE = "GPL-2.0"
+LICENSE = "GPL-2.0-only"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=5123b1988300c0d24c79e04f09d86dc0"
 
 # Packages supported
