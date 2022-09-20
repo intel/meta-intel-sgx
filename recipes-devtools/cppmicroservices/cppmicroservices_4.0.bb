@@ -6,7 +6,7 @@ LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=3b83ef96387f14655fc854ddc3c6bd57"
 
 # Packages required to build
-DEPENDS:append:class-target += "cppmicroservices-native"
+DEPENDS:append:class-target = " cppmicroservices-native"
 
 # Parallel make does not work with some recipes
 PARALLEL_MAKE = ""
@@ -19,7 +19,7 @@ SRC_URI = "gitsm://github.com/intel/linux-sgx.git"
 SRCREV = "a21f2d9dd77e7672b00f99f9b61bc81cc44e5954"
 
 # Patches
-SRC_URI:append:class-target += "file://0001-host-bin.patch \
+SRC_URI:append:class-target = " file://0001-host-bin.patch \
                                "
 SRC_URI:append = " file://0001-fix-build-with-gcc-11.patch;striplevel=3"
 
@@ -35,7 +35,7 @@ INHIBIT_PACKAGE_DEBUG_SPLIT  = "1"
 HOST_BIN = "${datadir}/cppmicroservices4/host_bin"
 
 EXTRA_OECMAKE += "-DCMAKE_BUILD_TYPE=RelWithDebInfo"
-EXTRA_OECMAKE:append:class-target += "-DCMAKE_HOST_BINARY_DIR:PATH=${RECIPE_SYSROOT_NATIVE}${HOST_BIN}"
+EXTRA_OECMAKE:append:class-target = " -DCMAKE_HOST_BINARY_DIR:PATH=${RECIPE_SYSROOT_NATIVE}${HOST_BIN}"
 
 ### install ###
 
