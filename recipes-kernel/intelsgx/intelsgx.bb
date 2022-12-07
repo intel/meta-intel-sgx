@@ -6,7 +6,7 @@ DEPENDS += " virtual/kernel"
 
 inherit module
 
-SRC_URI  = "git://github.com/intel/SGXDataCenterAttestationPrimitives.git;protocol=https"
+SRC_URI  = "git://github.com/intel/SGXDataCenterAttestationPrimitives.git;protocol=https;branch=master"
 SRC_URI += "file://build_kernel_yocto.patch"
 
 SRCREV = "98976322e8b58e23256355f5cf90b9e30e37d8c1"

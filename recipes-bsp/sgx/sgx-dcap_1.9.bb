@@ -16,7 +16,7 @@ D_prebuilt_dcap = "${S}/QuoteGeneration"
 D_sgxssl="${S}/QuoteVerification/sgxssl"
 D_openssl="${S}/QuoteVerification/sgxssl/openssl_source"
 
-SRC_URI  = "git://github.com/intel/SGXDataCenterAttestationPrimitives.git;protocol=https"
+SRC_URI  = "git://github.com/intel/SGXDataCenterAttestationPrimitives.git;protocol=https;branch=master"
 SRCREV = "98976322e8b58e23256355f5cf90b9e30e37d8c1"
 
 ### prebuilt sgx dcap source ###
