@@ -6,7 +6,7 @@ inherit native
 
 ### common ###
 
-require sgx-common_2.12.inc
+require sgx-common_2.18.inc
 
 # Packages required to build.
 DEPENDS += "ocaml-native ocamlbuild-native"
@@ -28,12 +28,17 @@ EXTRA_OEMAKE += "OCAMLLIB='${STAGING_LIBDIR_NATIVE}/ocaml' -C sdk signtool edger
 ### install ###
 
 do_install () {
-    ${RECIPE_SYSROOT}${sgxrootdir}/package/sgx_linux_x64_sdk_2.12.100.3.bin --prefix="${D}${sgxdirprefix}${sgxrootdir}"
+    ${RECIPE_SYSROOT}${sgxrootdir}/package/sgx_linux_x64_sdk_2.18.100.3.bin --prefix="${D}${sgxdirprefix}${sgxrootdir}"
     mv "${D}${sgxdirprefix}${sgxsdkpath}" "${D}${sgxdirprefix}${sgxsdkpath}-cross"
     rm -f ${D}${sgxdirprefix}${sgxsdkpath}-cross/bin/x64/*
     install -m 0755 ${B}/build/linux/sgx_sign    ${D}${sgxdirprefix}${sgxsdkpath}-cross/bin/x64
     install -m 0755 ${B}/build/linux/sgx_edger8r ${D}${sgxdirprefix}${sgxsdkpath}-cross/bin/x64
     install -m 0755 ${B}/build/linux/sgx_encrypt ${D}${sgxdirprefix}${sgxsdkpath}-cross/bin/x64
+
+    if [ -L ${D}${sgxdirprefix}${sgxsdkpath}-cross/lib64/libsgx_urts.so.2 ]; then
+        cd ${D}${sgxdirprefix}${sgxsdkpath}-cross/lib64
+        ln -sf libsgx_urts.so libsgx_urts.so.2
+    fi
 }
 
 ### ###

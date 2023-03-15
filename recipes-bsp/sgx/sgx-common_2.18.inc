@@ -10,10 +10,10 @@ LICENSE = " \
   BSD & \
   EPL-1.0 \
 "
-LIC_FILES_CHKSUM = "file://License.txt;md5=a126e7fbbb897ad5819596908b509eae"
+LIC_FILES_CHKSUM = "file://License.txt;md5=4af23fbd783d5ab20d55ba56c0b7b894"
 
 # Packages required to build
-DEPENDS:append = " openssl-native cmake-native"
+DEPENDS:append = " openssl-native cmake-native zlib"
 DEPENDS:append:class-target = " openssl"
 
 # Parallel make does not work with some recipes
@@ -44,5 +44,5 @@ sgxsdkpath = "${sgxrootdir}${sgxsdkdir}"
 
 ### source ###
 
-require sgx-source_2.12.inc
+require sgx-source_2.18.inc
 

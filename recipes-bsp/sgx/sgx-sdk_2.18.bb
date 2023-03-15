@@ -3,7 +3,7 @@
 
 ### common ###
 
-require sgx-common_2.12.inc
+require sgx-common_2.18.inc
 
 # Packages required to build.
 DEPENDS += "ocaml-native ocamlbuild-native autoconf-native automake-native"
@@ -27,7 +27,7 @@ CXXFLAGS:append = " -Wno-deprecated-declarations"
 
 do_install () {
     mkdir -p "${D}${sgxdirprefix}${sgxrootdir}/package"
-    cp "${S}/linux/installer/bin/sgx_linux_x64_sdk_2.12.100.3.bin" "${D}${sgxdirprefix}${sgxrootdir}/package"
+    cp "${S}/linux/installer/bin/sgx_linux_x64_sdk_2.18.100.3.bin" "${D}${sgxdirprefix}${sgxrootdir}/package"
 }
 
 ### package ###
