@@ -44,5 +44,4 @@ sgxsdkpath = "${sgxrootdir}${sgxsdkdir}"
 
 ### source ###
 
-require sgx-source_2.18.inc
-
+require sgx-source_2.18.1.inc
