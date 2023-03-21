@@ -13,10 +13,8 @@ PARALLEL_MAKE = ""
 PARALLEL_MAKEINST = ""
 
 # Source repo
-SRC_URI += "https://github.com/ocaml/ocaml/archive/4.08.1.tar.gz;sha256sum=b53ed3d487b83fd49bc181bded066ae8e6fb592cf40514261d27d36050d5db85"
-SRC_URI += "file://0001-4.08.1-link-error.patch"
-SRC_URI += "file://0002-4.08.1-shebang-use-env.patch"
-S = "${WORKDIR}/ocaml-4.08.1"
+SRC_URI += "https://github.com/ocaml/ocaml/archive/4.13.0.tar.gz;sha256sum=d3eaf17fcd8722827ae15c560a419ee52cf7e066f1d6cb80df621bfd3a17d61c"
+S = "${WORKDIR}/ocaml-4.13.0"
 
 do_configure () {
     ./configure --prefix="${prefix}" --enable-debugger=no --disable-ocamldoc --with-x=no

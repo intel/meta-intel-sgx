@@ -1,7 +1,8 @@
 diff --git a/linux/installer/bin/install-sgx-sdk.bin.tmpl b/linux/installer/bin/install-sgx-sdk.bin.tmpl
+index 63256555..a0eb8a01 100755
 --- a/linux/installer/bin/install-sgx-sdk.bin.tmpl
 +++ b/linux/installer/bin/install-sgx-sdk.bin.tmpl
-@@ -175,17 +175,20 @@ export_the_simulation()
+@@ -175,11 +175,11 @@ export_the_simulation()
          rm -f ${SGX_PACKAGES_PATH}/${SDK_PKG_NAME}/sdk_libs/libsgx_launch_sim.so
          rm -f ${SGX_PACKAGES_PATH}/${SDK_PKG_NAME}/sdk_libs/libsgx_epid_sim.so
      fi
@@ -15,8 +16,10 @@ diff --git a/linux/installer/bin/install-sgx-sdk.bin.tmpl b/linux/installer/bin/
 +    ln -s ../${LIB_DIR}/libsgx_quote_ex_sim.so ${SGX_PACKAGES_PATH}/${SDK_PKG_NAME}/sdk_libs/
 +    ln -s ../${LIB_DIR}/libsgx_launch_sim.so ${SGX_PACKAGES_PATH}/${SDK_PKG_NAME}/sdk_libs/
 +    ln -s ../${LIB_DIR}/libsgx_epid_sim.so ${SGX_PACKAGES_PATH}/${SDK_PKG_NAME}/sdk_libs/
- } 
+ }
  
+ create_urts_soname_link()
+@@ -191,7 +191,10 @@ create_urts_soname_link()
  generate_environment_script()
  {
      cat > ${SGX_PACKAGES_PATH}/${SDK_PKG_NAME}/environment <<EOF
