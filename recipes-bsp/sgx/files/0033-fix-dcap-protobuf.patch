@@ -1,0 +1,13 @@
+diff --git a/QuoteGeneration/quote_wrapper/qgs/Makefile b/QuoteGeneration/quote_wrapper/qgs/Makefile
+index 762f567..9c99673 100644
+--- a/QuoteGeneration/quote_wrapper/qgs/Makefile
++++ b/QuoteGeneration/quote_wrapper/qgs/Makefile
+@@ -57,7 +57,7 @@ QGS_LFLAGS = -L$(TOP_DIR)/build/linux -lsgx_tdx_logic -lsgx_pce_logic -ldl \
+ # add protobuf for link
+ QGS_LFLAGS += `pkg-config --libs protobuf-lite`
+ # add boost_system for link
+-QGS_LFLAGS += -lboost_system -lboost_thread -lpthread
++QGS_LFLAGS += -lboost_system -lboost_thread -lpthread -lprotobuf
+
+ vpath %.c $(COMMON_DIR)/src
+
