@@ -4,7 +4,7 @@
 ### common ###
 
 SUMMARY = "Intel(R) SGX Data Center Attestation Primitives (DCAP) driver"
-LICENSE = "BSD & Intel-Redistributable-Binaries"
+LICENSE = "BSD-3-Clause & Intel-Redistributable-Binaries"
 LIC_FILES_CHKSUM = "file://License.txt;md5=92c8e45a85591e3c219bceebaad7235e"
 
 inherit pkgconfig

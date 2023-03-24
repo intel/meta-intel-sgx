@@ -7,7 +7,7 @@ LICENSE = " \
   Intel-Sample-Source-Code & \
   MIT & \
   STLPort & \
-  BSD & \
+  BSD-3-Clause & \
   EPL-1.0 \
 "
 LIC_FILES_CHKSUM = "file://License.txt;md5=4af23fbd783d5ab20d55ba56c0b7b894"
