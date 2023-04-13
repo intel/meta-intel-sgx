@@ -13,6 +13,7 @@ DEPENDS += "protobuf-native cppmicroservices-native curl protobuf cppmicroservic
 SRC_URI += " \
     file://0031-add-sysroot-libdir-target.patch  \
     file://0032-cppmicroservices-target-build.patch \
+    file://fix_link.patch \
 "
 
 ### compile ###
