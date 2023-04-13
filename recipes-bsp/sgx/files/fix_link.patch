@@ -1,0 +1,17 @@
+diff --git a/linux/installer/common/psw/Makefile b/linux/installer/common/psw/Makefile
+index 1486ee1f..9ffc00b7 100644
+--- a/linux/installer/common/psw/Makefile
++++ b/linux/installer/common/psw/Makefile
+@@ -82,4 +82,11 @@ install:
+ 	ln -fs libsgx_quote_ex.so.$(call SPLIT_VERSION,$(QEX_VER),1) libsgx_quote_ex.so
+ 	cd $(INSTALL_PATH)/aesm && \
+ 	ln -fs liburts_internal.so libsgx_urts.so.$(call SPLIT_VERSION,$(URTS_VER),1) && \
+-	ln -fs libsgx_qe3_logic.so.$(call SPLIT_VERSION,$(QE3L_VER),1) libsgx_qe3_logic.so
++	ln -fs libsgx_qe3_logic.so.$(call SPLIT_VERSION,$(QE3L_VER),1) libsgx_qe3_logic.so &&\
++	ln -fs libsgx_qe3.signed.so.1 libsgx_qe3.signed.so && \
++	ln -fs libsgx_qe.signed.so.1 libsgx_qe.signed.so && \
++	ln -fs libsgx_pve.signed.so.1 libsgx_pve.signed.so && \
++	ln -fs libsgx_pce_logic.so.1  libsgx_pce_logic.so && \
++	ln -fs libsgx_pce.signed.so.1 libsgx_pce.signed.so && \
++	ln -fs libsgx_le.signed.so.1 libsgx_le.signed.so && \
++	ln -fs libsgx_id_enclave.signed.so.1 libsgx_id_enclave.signed.so
