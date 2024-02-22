@@ -16,6 +16,7 @@ PARALLEL_MAKEINST = ""
 SRC_URI += "https://github.com/ocaml/ocaml/archive/4.08.1.tar.gz;sha256sum=b53ed3d487b83fd49bc181bded066ae8e6fb592cf40514261d27d36050d5db85"
 SRC_URI += "file://0001-4.08.1-link-error.patch"
 SRC_URI += "file://0002-4.08.1-shebang-use-env.patch"
+SRC_URI += "file://0001-Fix-ocaml-compilation-in-ubuntu-22.04-LTS.patch"
 S = "${WORKDIR}/ocaml-4.08.1"
 
 do_configure () {
