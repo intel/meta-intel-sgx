@@ -1,0 +1,51 @@
+From 61c83346fe9e04e38334ee3cefeeb1e16d5dbb15 Mon Sep 17 00:00:00 2001
+From: Preeti Sachan <preeti.sachan@intel.com>
+Date: Fri, 1 Mar 2024 14:36:37 +0530
+Subject: [PATCH] fix aesm_service cross compilation
+
+CMake find & import native CppMicroServices library from recipe-sysroot-native
+and same is used to link for target 'aesm_service' cross build, thus throwing error:
+|~/build/tmp-*/work/corei7-64-*/sgx/2.18.1-r0/recipe-sysroot-native/usr/bin/x86_64-ese-linux/
+|../../libexec/x86_64-ese-linux/gcc/x86_64-ese-linux/11.4.0/ld:
+|~/build/tmp-*/work/corei7-64-*/sgx/2.18.1-r0/recipe-sysroot-native/usr/lib/libCppMicroServices.so.4.0.0:
+|undefined reference to `std::condition_variable::wait(std::unique_lock<std::mutex>&)@GLIBCXX_3.4.30'
+
+Explicity import & use target CppMicroServices library from recipe-sysroot to fix target build.
+
+Signed-off-by: Preeti Sachan <preeti.sachan@intel.com>
+---
+ psw/ae/aesm_service/source/core/CMakeLists.txt | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
+
+diff --git a/psw/ae/aesm_service/source/core/CMakeLists.txt b/psw/ae/aesm_service/source/core/CMakeLists.txt
+index 878ba1db..09c3b403 100644
+--- a/psw/ae/aesm_service/source/core/CMakeLists.txt
++++ b/psw/ae/aesm_service/source/core/CMakeLists.txt
+@@ -9,6 +9,10 @@ if(NOT US_BUILD_SHARED_LIBS)
+   # Set up dependencies to resources from static bundles
+   usFunctionGetResourceSource(TARGET aesm_service OUT _srcs)
+ endif()
++
++set(CppMicroServices_LIBDIR $ENV{SYSROOT_LIBDIR})
++set(CppMicroServices_INCDIR $ENV{SYSROOT_INCDIR}/cppmicroservices4)
++
+ add_executable(aesm_service ${_srcs})
+ 
+ target_include_directories(aesm_service PRIVATE
+@@ -22,11 +26,12 @@ target_include_directories(aesm_service PRIVATE
+   ${PROJECT_SOURCE_DIR}/../../../../external/dcap_source/QuoteGeneration/quote_wrapper/quote/inc
+   ${PROJECT_SOURCE_DIR}/interfaces
+   ipc
++  ${CppMicroServices_INCDIR}
+ )
+ 
+ add_subdirectory(ipc)
+ target_link_libraries(aesm_service
+-  CppMicroServices
++  ${CppMicroServices_LIBDIR}/libCppMicroServices.so
+   oal
+   utils
+   ipc
+-- 
+2.34.1
+
