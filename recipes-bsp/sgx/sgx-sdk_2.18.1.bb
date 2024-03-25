@@ -14,6 +14,8 @@ SRC_URI += " \
     file://0001-sdk-configure.patch              \
     file://0002-install-sysroot.patch            \
     file://0021-fix-include-path.patch           \
+    file://tlibcxx-use-gcc-is_convertible-built-in-traits.patch \
+    file://tlibcxx-initialize-__chash-variable.patch \
 "
 
 ### compile ###
