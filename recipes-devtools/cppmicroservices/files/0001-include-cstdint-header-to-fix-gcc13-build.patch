@@ -1,0 +1,24 @@
+From d8174e56eb2595751d75bdadb6e371eadf9405eb Mon Sep 17 00:00:00 2001
+From: kjlau0112 <karn.jye.lau@intel.com>
+Date: Fri, 8 Dec 2023 13:22:54 +0530
+Subject: [PATCH] include  <cstdint> header to fix gcc13 build.
+
+Upstream-Status: Backport [https://github.com/intel/linux-sgx/commit/cd6c2a8b81a2d70a2b2a1e7ce814bdbea9dd4732]
+
+Signed-off-by: kjlau0112 <karn.jye.lau@intel.com>
+---
+ external/CppMicroServices/util/src/FileSystem.cpp | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/external/CppMicroServices/util/src/FileSystem.cpp b/external/CppMicroServices/util/src/FileSystem.cpp
+index 3a3ffab0..650c9fbb 100644
+--- a/external/CppMicroServices/util/src/FileSystem.cpp
++++ b/external/CppMicroServices/util/src/FileSystem.cpp
+@@ -28,6 +28,7 @@
+ #include <stdexcept>
+ #include <string>
+ #include <vector>
++#include <cstdint>
+ 
+ #ifdef US_PLATFORM_POSIX
+ #  include <dirent.h>
