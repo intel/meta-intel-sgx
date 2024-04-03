@@ -15,7 +15,7 @@ PARALLEL_MAKEINST = ""
 ### source ###
 
 # Source repo
-SRC_URI = "gitsm://github.com/intel/linux-sgx.git;branch=master;protocol=https"
+SRC_URI = "gitsm://github.com/intel/linux-sgx.git;branch=main;protocol=https"
 SRCREV = "984f3c9fe809b8d0acfb0b0934087c240ecf280f"
 
 # Patches
