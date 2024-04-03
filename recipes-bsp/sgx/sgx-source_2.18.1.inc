@@ -2,7 +2,7 @@
 ### source ###
 
 # Source repo
-SRC_URI = "gitsm://github.com/intel/linux-sgx.git;branch=master;protocol=https"
+SRC_URI = "gitsm://github.com/intel/linux-sgx.git;branch=main;protocol=https"
 SRCREV = "607a226fc38e66e9b68f12c1b8b68045a5e064f8"
 
 SRC_URI += "https://download.01.org/intel-sgx/sgx-linux/2.18.1/optimized_libs_2.18.1.tar.gz;name=optimized_libs;subdir=${S}"
