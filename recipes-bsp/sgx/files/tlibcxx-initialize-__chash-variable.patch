@@ -1,0 +1,31 @@
+From 20fb92a9b92627daed683af026610d9d1a00a48a Mon Sep 17 00:00:00 2001
+From: Preeti Sachan <preeti.sachan@intel.com>
+Date: Thu, 28 Mar 2024 11:27:25 +0530
+Subject: [PATCH] tlibcxx: initialize __chash variable
+
+initialize __chash variable to fix warning treated as error.
+errr: '__chash' may be used uninitialized [-Werror=maybe-uninitialized]
+
+Upstream-Status: Backport [https://github.com/intel/linux-sgx/commit/e7bbc158fa242cf5b5534ecb1fb2668edf5cd887]
+
+Signed-off-by: Preeti Sachan <preeti.sachan@intel.com>
+---
+ sdk/tlibcxx/include/__hash_table | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/sdk/tlibcxx/include/__hash_table b/sdk/tlibcxx/include/__hash_table
+index 521ebbf2..8c926ad8 100644
+--- a/sdk/tlibcxx/include/__hash_table
++++ b/sdk/tlibcxx/include/__hash_table
+@@ -2073,7 +2073,7 @@ __hash_table<_Tp, _Hash, _Equal, _Alloc>::__emplace_unique_key_args(_Key const&
+     size_type __bc = bucket_count();
+     bool __inserted = false;
+     __next_pointer __nd;
+-    size_t __chash;
++    size_t __chash = 0;
+     if (__bc != 0)
+     {
+         __chash = __constrain_hash(__hash, __bc);
+-- 
+2.34.1
+
