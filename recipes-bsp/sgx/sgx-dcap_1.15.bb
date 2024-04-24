@@ -22,7 +22,8 @@ SRC_URI  = "git://github.com/intel/SGXDataCenterAttestationPrimitives.git;protoc
 SRCREV = "85cf8bdd393ab273a308be3f41d2f7cc25c0ec0c"
 
 ### prebuilt sgx dcap source ###
-SRC_URI += "https://download.01.org/intel-sgx/sgx-dcap/1.15/linux/prebuilt_dcap_1.15.tar.gz;name=prebuilt_dcap;subdir=${D_prebuilt_dcap}"
+SRC_URI += "https://download.01.org/intel-sgx/sgx-dcap/1.15/linux/prebuilt_dcap_1.15.tar.gz;name=prebuilt_dcap;subdir=${D_prebuilt_dcap} \
+            file://0001-sgx-dcap-fix-gcc-v13-build-and-absl-dependencies.patch"
 SRC_URI[prebuilt_dcap.sha256sum] = "b7a16cd939ec632363bb69f8df0bf60835d06adafb70e15ba341ef4e1d37ed36"
 
 ### configure sgxssl ###

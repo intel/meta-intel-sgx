@@ -15,6 +15,7 @@ SRC_URI += " \
     file://0032-cppmicroservices-target-build.patch \
     file://fix_link.patch \
     file://fix-aesm_service-cross-compilation.patch \
+    file://0001-sgx-fix-gcc-v13-build-and-absl-dependencies.patch \
 "
 
 ### compile ###
