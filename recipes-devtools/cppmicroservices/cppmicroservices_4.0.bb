@@ -63,3 +63,5 @@ FILES:${PN} = "${bindir} ${libdir} ${datadir}"
 
 BBCLASSEXTEND = "native"
 
+# File /usr/include/cppmicroservices4/cppmicroservices/FrameworkConfig.h in package cppmicroservices-dev contains reference to TMPDIR [buildpaths]
+INSANE_SKIP:${PN}-dev += "buildpaths"

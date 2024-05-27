@@ -6,7 +6,7 @@ DEPENDS += " virtual/kernel"
 
 inherit module
 
-SRC_URI = "git://github.com/intel/linux-sgx-driver.git \
+SRC_URI = "git://github.com/intel/linux-sgx-driver.git;protocol=https;branch=main \
            file://isgx_Makefile_for_yocto_build.patch \
           "
 

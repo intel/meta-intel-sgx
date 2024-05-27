@@ -40,6 +40,18 @@ do_install () {
         cd ${D}${sgxdirprefix}${sgxsdkpath}-cross/lib64
         ln -sf libsgx_urts.so libsgx_urts.so.2
     fi
+    # Fix for qa check buildpaths that contains reference to TMPDIR. Files .pc have
+    # TMPDIR "<absolute-path>/build/tmp-*/work/x86_64-linux/sgx-sdk-cross/2.18.1/recipe-sysroot-native/opt/intel/sgxsdk" in path to prefix variable.
+    sed -i -e 's#${D}${STAGING_DIR_NATIVE}##g' ${D}${sgxdirprefix}${sgxsdkpath}-cross/pkgconfig/libsgx_quote_ex.pc
+    sed -i -e 's#${D}${STAGING_DIR_NATIVE}##g' ${D}${sgxdirprefix}${sgxsdkpath}-cross/pkgconfig/libsgx_epid_sim.pc
+    sed -i -e 's#${D}${STAGING_DIR_NATIVE}##g' ${D}${sgxdirprefix}${sgxsdkpath}-cross/pkgconfig/libsgx_urts_sim.pc
+    sed -i -e 's#${D}${STAGING_DIR_NATIVE}##g' ${D}${sgxdirprefix}${sgxsdkpath}-cross/pkgconfig/libsgx_epid.pc
+    sed -i -e 's#${D}${STAGING_DIR_NATIVE}##g' ${D}${sgxdirprefix}${sgxsdkpath}-cross/pkgconfig/libsgx_launch_sim.pc
+    sed -i -e 's#${D}${STAGING_DIR_NATIVE}##g' ${D}${sgxdirprefix}${sgxsdkpath}-cross/pkgconfig/libsgx_launch.pc
+    sed -i -e 's#${D}${STAGING_DIR_NATIVE}##g' ${D}${sgxdirprefix}${sgxsdkpath}-cross/pkgconfig/libsgx_uae_service_sim.pc
+    sed -i -e 's#${D}${STAGING_DIR_NATIVE}##g' ${D}${sgxdirprefix}${sgxsdkpath}-cross/pkgconfig/libsgx_uae_service.pc
+    sed -i -e 's#${D}${STAGING_DIR_NATIVE}##g' ${D}${sgxdirprefix}${sgxsdkpath}-cross/pkgconfig/libsgx_quote_ex_sim.pc
+    sed -i -e 's#${D}${STAGING_DIR_NATIVE}##g' ${D}${sgxdirprefix}${sgxsdkpath}-cross/pkgconfig/libsgx_urts.pc
 }
 
 ### ###

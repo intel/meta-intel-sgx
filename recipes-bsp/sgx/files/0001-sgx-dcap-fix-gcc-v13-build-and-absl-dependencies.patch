@@ -1,0 +1,60 @@
+From df4b185c8d148ad5a763355efa7807b154751a10 Mon Sep 17 00:00:00 2001
+From: Preeti Sachan <preeti.sachan@intel.com>
+Date: Wed, 24 Apr 2024 12:21:51 +0530
+Subject: [PATCH] sgx-dcap: fix gcc v13 build and absl dependencies
+
+Fixed build issue with GCC v13 by including header '<cstdint>'.
+Protobuf v22 and later depends on abseil-cpp and abseil-cpp requires C++17.
+
+Ref:
+https://git.openembedded.org/meta-openembedded/commit/meta-oe/recipes-devtools/protobuf?id=fb34c7e3fae2ac7412dfb5920dfd1c9aca68427f
+https://protobuf.dev/support/migration/#cpp-22
+
+Upstream-Status: Backport [https://github.com/intel/SGX-TDX-DCAP-QuoteVerificationLibrary/commit/16b7291a7a86e486fdfcf1dfb4be885c0cc00b4e]
+
+Signed-off-by: Preeti Sachan <preeti.sachan@intel.com>
+---
+ QuoteGeneration/buildenv.mk                                    | 2 +-
+ QuoteGeneration/qcnl/inc/qcnl_util.h                           | 3 ++-
+ .../QVL/Src/AttestationCommons/include/OpensslHelpers/Bytes.h  | 1 +
+ 3 files changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/QuoteGeneration/buildenv.mk b/QuoteGeneration/buildenv.mk
+index 67b9e9f..e12e5c0 100644
+--- a/QuoteGeneration/buildenv.mk
++++ b/QuoteGeneration/buildenv.mk
+@@ -137,7 +137,7 @@ CFLAGS += -Wjump-misses-init -Wstrict-prototypes -Wunsuffixed-float-constants
+ # additional warnings flags for C++
+ CXXFLAGS += -Wnon-virtual-dtor
+ 
+-CXXFLAGS += -std=c++14
++CXXFLAGS += -std=c++17
+ 
+ .DEFAULT_GOAL := all
+ # this turns off the RCS / SCCS implicit rules of GNU Make
+diff --git a/QuoteGeneration/qcnl/inc/qcnl_util.h b/QuoteGeneration/qcnl/inc/qcnl_util.h
+index 26f7fb1..35df7d0 100644
+--- a/QuoteGeneration/qcnl/inc/qcnl_util.h
++++ b/QuoteGeneration/qcnl/inc/qcnl_util.h
+@@ -39,6 +39,7 @@
+ 
+ #include <string>
+ #include <unordered_map>
++#include <cstdint>
+ 
+ using namespace std;
+ 
+diff --git a/QuoteVerification/QVL/Src/AttestationCommons/include/OpensslHelpers/Bytes.h b/QuoteVerification/QVL/Src/AttestationCommons/include/OpensslHelpers/Bytes.h
+index acfe6f1..dbe742a 100644
+--- a/QuoteVerification/QVL/Src/AttestationCommons/include/OpensslHelpers/Bytes.h
++++ b/QuoteVerification/QVL/Src/AttestationCommons/include/OpensslHelpers/Bytes.h
+@@ -38,6 +38,7 @@
+ #include <string>
+ #include <algorithm>
+ #include <iterator>
++#include <cstdint>
+ 
+ namespace intel { namespace sgx { namespace dcap {
+ 
+-- 
+2.34.1
